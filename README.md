@@ -3,6 +3,6 @@
 ## Informações do grupo
 
 Grupo 5
-* Augusto Vaccareli
+* Augusto Vaccarelli
 * Igor Caixeta
 * Luiz Mota
