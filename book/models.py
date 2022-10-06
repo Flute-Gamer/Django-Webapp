@@ -46,14 +46,14 @@ class Status(models.Model):
     class Meta:
         db_table = 'status'
 
-class Companhia_Aerea(models.Model):
+class Companhia(models.Model):
     nome = models.CharField(max_length=200, null=False)
     funcionarios = models.ForeignKey(Funcionario,on_delete=models.CASCADE)
     pilotos = models.ForeignKey(Piloto,on_delete=models.CASCADE)
     voo = models.ForeignKey(Voo,on_delete=models.CASCADE)
     id_companhia_aerea = models.IntegerField(primary_key=True)
     class Meta:
-        db_table = 'companhia_aerea'
+        db_table = 'companhia'
 
         
 ##Tabela Data está excluida, visto que models.DateTime já gerencia o fuso
