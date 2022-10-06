@@ -14,14 +14,14 @@ class Voo(models.Model):
     class Meta:
         db_table = 'voo'
 
-class Operador(models.Model):
+class Operador(models.Model): ##trabalha na torre
     nome = models.CharField(max_length=200, null=False)
     cpf = models.CharField(max_length=11, null=False, primary_key = True)
     email = models.IntegerField(max_length=200, null=False)
     class Meta:
         db_table = 'operador'
 
-class Funcionario(models.Model):
+class Funcionario(models.Model): ##cara da companhia
     nome = models.CharField(max_length=200, null=False)
     cpf = models.CharField(max_length=11, null=False, primary_key = True)
     email = models.IntegerField(max_length=200, null=False)
@@ -50,6 +50,7 @@ class Companhia_Aerea(models.Model):
     nome = models.CharField(max_length=200, null=False)
     funcionarios = models.ForeignKey(Funcionario,on_delete=models.CASCADE)
     pilotos = models.ForeignKey(Piloto,on_delete=models.CASCADE)
+    voo = models.ForeignKey(Voo,on_delete=models.CASCADE)
     id_companhia_aerea = models.IntegerField(primary_key=True)
     class Meta:
         db_table = 'companhia_aerea'
