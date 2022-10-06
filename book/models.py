@@ -4,7 +4,6 @@ import datetime
 
 class Voo(models.Model):
     codigo_de_voo = models.IntegerField(primary_key=True)
-    companhia_aerea = models.CharField(max_length=200, null=False)
     status = models.IntegerField()
     aeroporto_destino = models.CharField(max_length=200, null=False)
     aeroporto_partida = models.CharField(max_length=200, null=False)
@@ -28,7 +27,6 @@ class Funcionario(models.Model):
     email = models.IntegerField(max_length=200, null=False)
     salario = models.IntegerField(null = False)
     endereco = models.IntegerField(max_length=200, null=False)
-    companhia_aerea = models.CharField(max_length=200, null=False)
     class Meta:
         db_table = 'funcionario'
 
@@ -38,7 +36,6 @@ class Piloto(models.Model):
     email = models.IntegerField(max_length=200, null=False)
     salario = models.IntegerField(null = False)
     endereco = models.IntegerField(max_length=200, null=False)
-    companhia_aerea = models.CharField(max_length=200, null=False)
     class Meta:
         db_table = 'piloto'
 
@@ -49,5 +46,15 @@ class Status(models.Model):
     class Meta:
         db_table = 'status'
 
+class Companhia_Area(models.Model):
+    nome = models.CharField(max_length=200, null=False)
+    funcionarios = models.ForeignKey(Funcionario, on_delete = models.SET_NULL)
+    pilotos = models.ForeignKey(Funcionario, on_delete = models.SET_NULL)
+    id_companhia_aerea = models.IntegerField(primary_key=True)
+    class Meta:
+        db_table = 'companhia_aerea'
+
+        
 ##Tabela Data está excluida, visto que models.DateTime já gerencia o fuso
 ##Na primeira imagem na tabela Voo, faltou aeropoto_partida
+##Criada a classe companhia aerea
