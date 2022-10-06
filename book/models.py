@@ -48,8 +48,8 @@ class Status(models.Model):
 
 class Companhia_Area(models.Model):
     nome = models.CharField(max_length=200, null=False)
-    funcionarios = models.ForeignKey(Funcionario, on_delete = models.SET_NULL)
-    pilotos = models.ForeignKey(Funcionario, on_delete = models.SET_NULL)
+    funcionarios = models.ForeignKey(Funcionario,on_delete=models.CASCADE)
+    pilotos = models.ForeignKey(Piloto,on_delete=models.CASCADE)
     id_companhia_aerea = models.IntegerField(primary_key=True)
     class Meta:
         db_table = 'companhia_aerea'
