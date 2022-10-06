@@ -20,6 +20,17 @@ template
   -- first.html
 
 ## Instalação e Execução do Projeto
-Para instalar, basta realizar um 
-```git clone https://github.com/Flute-Gamer/Django-Webapp.git```
-, o qual você terá acesso ao nosso projeto de PCS3643. Para rodar o projeto, é necessário estar na pasta do projeto rodar o comando ```python manage.py runserver```. Assim, existirá um link que é executado em um servidor local o qual pode ser aberto por qualquer navegador.
+Para instalar o nosso projeto de PCS3643, basta realizar alguns comandos: 
+</br>
+</br>
+1. ```git clone https://github.com/Flute-Gamer/Django-Webapp.git```
+</br>
+</br>
+Para executar o projeto, é necessário estar na pasta do onde ele foi clonado ao rodar o comando: 
+</br>
+</br>
+2. ```python manage.py runserver```
+</br>
+</br>
+
+ Assim, existirá um link que é executado em um servidor local o qual pode ser aberto por qualquer navegador.
