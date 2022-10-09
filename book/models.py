@@ -17,7 +17,7 @@ class Voo(models.Model):
 class Operador(models.Model): ##trabalha na torre
     nome = models.CharField(max_length=200, null=False)
     cpf = models.CharField(max_length=11, null=False, primary_key = True)
-    email = models.IntegerField(max_length=200, null=False)
+    email = models.CharField(max_length=200, null=False)
     class Meta:
         db_table = 'operador'
 
