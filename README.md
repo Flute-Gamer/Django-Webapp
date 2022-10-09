@@ -8,10 +8,12 @@ Grupo 5
 * Luiz Mota
 
 ## Esqueleto da Aplicação
+### Diagrama Entidade Relacionamento
+![image](readme_images/DiagramaEntidadeRelacionamento.png)
+### Diagramas de Classe
 ![image](readme_images/diag_1.jpeg)
 ![image](readme_images/diag_2.jpeg)
 ![image](readme_images/diag_3.jpeg)
-
 
 ## Arquivos adicionados
 Arquivos adicionados com relação ao WebApp default do Django:
