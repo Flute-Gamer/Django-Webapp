@@ -2,6 +2,13 @@ from django.test import TestCase
 import datetime
 # Create your tests here.
 from book.models import Voo,Operador,Funcionario,Piloto,Status,Companhia
+class PilotoTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Piloto.objects.create(nome='Michelet',email='michelet@usp.br',salario=3500,endereco='Rua A')
+    def test_criacao_piloto(self):
+        piloto_1=Piloto.objects.get(nome='Michelet')
+        self.assertEqual(piloto_1.email,'michelet@usp.br')
 class VooTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -20,6 +27,13 @@ class VooTests(TestCase):
             )
         voo_1 = Voo.objects.get(codigo_de_voo=1)
         Companhia.objects.create(nome='TAM',funcionarios=funcionario_1,pilotos=piloto_1,voo=voo_1)
-    def test_criacao_id(self):
+    ### Teste de Criação de Voo
+    # Testa se o Voo foi corretamente criado com alguns testes dos atributos 
+    def test_criacao_voo(self):
         voo_1 = Voo.objects.get(aeroporto_destino='Congonhas-SP')
         self.assertEqual(voo_1.codigo_de_voo, 1)
+        self.assertEqual(voo_1.aeroporto_partida,'Passos-MG')
+        self.assertEqual(voo_1.status,1)
+    # def test_data(self): #datetime não está comparando corretamente
+    #     voo_1 = Voo.objects.get(aeroporto_destino='Congonhas-SP')
+    #     self.assertEqual(voo_1.partida_prevista,datetime(2022, 6, 10, 0, 0))
