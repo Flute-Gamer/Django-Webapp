@@ -1,66 +1,51 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="pt-br">
-
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <title>Exemplo de integração com Bootstrap</title>
+    <title>CodePen - A Pen by Mohithpoojary</title>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/all.css'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'><link rel="stylesheet" href="{% static 'css/index_style.css' %}">
+    <script type="text/javascript">
+        function SubmitLogin(){
+            window.location.assign("127.0.0.1:8000/inicial");
+        }
+    </script>
+
 </head>
-
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">Menu</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-6">
-                <h2>Entrar</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Endereço de Email</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                            placeholder="Enter email">
-                        <small id="emailHelp" class="form-text text-muted">Nós nunca compartilharemos seu email com ninguém.</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Senha</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Lembrar Deste Usuário</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submeter</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
+<!-- partial:index.partial.html -->
+<div class="container">
+	<div class="screen">
+		<div class="screen__content">
+			<form class="login">
+				<div class="login__field">
+					<i class="login__icon fas fa-user"></i>
+					<input type="text" class="login__input" placeholder="Entre com o Usuário">
+				</div>
+				<div class="login__field">
+					<i class="login__icon fas fa-lock"></i>
+					<input type="password" class="login__input" placeholder="Senha">
+				</div>
+				<button class="button login__submit" onclick="SubmitLogin()" type="submit">
+					<span class="button__text">Logar</span>
+					<i class="button__icon fas fa-chevron-right"></i>
+				</button>				
+			</form>
+			<div class="social-login">
+				<h3>Gerenciamento de voos</h3>
+			</div>
+		</div>
+		<div class="screen__background">
+			<span class="screen__background__shape screen__background__shape4"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>		
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape1"></span>
+		</div>		
+	</div>
+</div>
+<!-- partial -->
+  
 </body>
-
 </html>
