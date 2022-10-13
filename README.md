@@ -14,6 +14,7 @@ Grupo 5
 ![image](readme_images/diag_1.jpeg)
 ![image](readme_images/diag_2.jpeg)
 ![image](readme_images/diag_3.jpeg)
+### Diagrama de Navegação
 ![image](readme_images/DiagramadeNavegação.png)
 
 ## Arquivos adicionados
