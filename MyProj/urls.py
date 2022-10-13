@@ -19,5 +19,9 @@ from book import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('first' , views.bookview)
+    path('login' , views.login),
+    path('inicial',views.inicial),
+    path('cadastroVoos',views.cadastroVoos),
+    path('relatorios',views.relatorios),
+    path('monitoraVoos',views.monitoraVoos)
 ]
