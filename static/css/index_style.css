@@ -76,7 +76,7 @@ body {
 }
 
 .screen__background__shape4 {
-	height: 400px;
+	height: 40px; /*Alterei aqui a altura de 400 pra 40 pra nn dar scroll*/
 	width: 200px;
 	background: #7E7BB9;	
 	top: 420px;
