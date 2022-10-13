@@ -9,7 +9,7 @@
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.2.0/css/fontawesome.css'><link rel="stylesheet" href="{% static 'css/index_style.css' %}">
     <script type="text/javascript">
         function SubmitLogin(){
-            window.location.assign("127.0.0.1:8000/inicial");
+            window.location.assign("inicial");
         }
     </script>
 
@@ -28,7 +28,7 @@
 					<i class="login__icon fas fa-lock"></i>
 					<input type="password" class="login__input" placeholder="Senha">
 				</div>
-				<button class="button login__submit" onclick="SubmitLogin()" type="submit">
+				<button class="button login__submit" onclick="SubmitLogin()" type="button">
 					<span class="button__text">Logar</span>
 					<i class="button__icon fas fa-chevron-right"></i>
 				</button>				
