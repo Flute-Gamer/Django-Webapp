@@ -20,8 +20,6 @@ Grupo 5
 ## Arquivos adicionados
 Arquivos adicionados com relação ao WebApp default do Django:
 
-template
-  -- first.html
 
 ## Instalação e Execução do Projeto
 Para instalar o nosso projeto de PCS3643, basta realizar alguns comandos: 
@@ -38,3 +36,5 @@ Para executar o projeto, é necessário estar na pasta do onde ele foi clonado a
 </br>
 
  Assim, existirá um link que é executado em um servidor local o qual pode ser aberto por qualquer navegador.
+
+ Primeira página: http://127.0.0.1:8000/login
