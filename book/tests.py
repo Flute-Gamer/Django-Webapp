@@ -34,6 +34,15 @@ class VooTests(TestCase):
         self.assertEqual(voo_1.codigo_de_voo, 1)
         self.assertEqual(voo_1.aeroporto_partida,'Passos-MG')
         self.assertEqual(voo_1.status,1)
-    # def test_data(self): #datetime não está comparando corretamente
-    #     voo_1 = Voo.objects.get(aeroporto_destino='Congonhas-SP')
-    #     self.assertEqual(voo_1.partida_prevista,datetime(2022, 6, 10, 0, 0))
+
+    def test_atualizacao_salario(self):
+        funcionario_1 = Funcionario.objects.get(nome='Igor')
+        funcionario_1.salario = 301
+        funcionario_1.save()
+        self.assertEqual(funcionario_1.salario,301)
+
+
+    def test_remocao_voo(self):
+        voo_1 = Voo.objects.get(aeroporto_destino='Congonhas-SP')
+        voo_1.delete()
+        self.assertEqual(Voo.objects.count(),0)
