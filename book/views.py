@@ -25,6 +25,10 @@ def monitoraVoos(request):
 def retornaRelatorioPDF(request):
     buffer = io.BytesIO()
     buffer.seek(0)
-    relatorio = GeradorRelatorio(None,None,None)
-    relatorio.gera_pdf()
+    
+    relatorio = GeradorRelatorio(None, None, None) #GeradorRelatorio(tipo, inicio, fim)
+    #                 tipo é um boolean (0 para Partidas e 1 para Chegadas)
+    #                 inicio e fim sao datetimes na forma AAAA/MM/DD-HH:MM:SS
+    
+    relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
     return FileResponse(buffer, as_attachment=True, filename='requirements.txt')
