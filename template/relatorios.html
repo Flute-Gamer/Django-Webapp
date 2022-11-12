@@ -22,6 +22,19 @@
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
 
+    <script type="text/javascript">
+        function downloadRelatorio(){
+            var tipo = document.querySelector('input[name="tipo_relatorio"]:checked').value;
+            console.log(tipo)
+            if(tipo === "partida"){
+                window.location.assign("download");
+            }
+            else{
+                window.location.assign("inicial");
+            }
+        }
+    </script>
+
 </head>
 
 <body id="page-top">
@@ -58,12 +71,11 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Inicial</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -73,13 +85,30 @@
                     </div>
                 </div>
             </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
+            
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span>Monitora Voos</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Cadastra Voos</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
@@ -190,12 +219,13 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Relatório de Voos </h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i>Gerar Relatório</a>
+                        <button onclick="downloadRelatorio()">Gerar Relatório</button>
+                        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i>Gerar Relatório</a> -->
                     </div>
-                        <input type="radio" id="html" name="tipo_relatorio" value="HTML">
+                        <input type="radio" id="html" name="tipo_relatorio" value="partida">
                         <label for="html">Relatório de Partida</label><br>
-                        <input type="radio" id="css" name="tipo_relatorio" value="CSS">
+                        <input type="radio" id="css" name="tipo_relatorio" value="chegada">
                         <label for="css">Relatório de Chegada</label><br>
                     <!-- Content Row -->
                     <div class="row">
