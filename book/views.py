@@ -26,7 +26,11 @@ def monitoraVoos(request):
         'voo_mostrado': mostra_codigo_do_voo(request),
         'status_mostrado': mostra_status_do_voo(request),
         'destino_mostrado': mostra_aeroporto_destino(request),
-        'partida_mostrada': mostra_aeroporto_partida(request)
+        'partida_mostrada': mostra_aeroporto_partida(request),
+        'partida_prevista' : mostra_partida_prevista(request),
+        'partida_real' : mostra_partida_real(request),
+        'chegada_prevista' : mostra_chegada_prevista(request),
+        'chegada_real' : mostra_chegada_real(request)
     }
     return render(request, "monitoraVoos.html", context)
 
@@ -49,6 +53,26 @@ def mostra_aeroporto_partida(request):
     voo = Voo(0,"Passos","Curitiba ou Passos",datetime.date(2022,11,11),datetime.date(2022,11,12))
     print('Partida do voo: '+ str(voo.get_aeroporto_partida()))
     return ('Partida do voo: '+ str(voo.get_aeroporto_partida()))
+
+def mostra_partida_prevista(request):
+    voo = Voo(0,"Passos","Curitiba ou Passos",datetime.date(2022,11,11),datetime.date(2022,11,12))
+    print('Partida prevista: '+ str(voo.get_partida_prevista()))
+    return ('Partida prevista: '+ str(voo.get_partida_prevista()))
+
+def mostra_partida_real(request):
+    voo = Voo(0,"Passos","Curitiba ou Passos",datetime.date(2022,11,11),datetime.date(2022,11,12))
+    print('Partida real: '+ str(voo.get_partida_real()))
+    return ('Partida real: '+ str(voo.get_partida_real()))
+
+def mostra_chegada_prevista(request):
+    voo = Voo(0,"Passos","Curitiba ou Passos",datetime.date(2022,11,11),datetime.date(2022,11,12))
+    print('Chegada prevista: '+ str(voo.get_chegada_prevista()))
+    return ('Chegada prevista: '+ str(voo.get_chegada_prevista()))
+
+def mostra_chegada_real(request):
+    voo = Voo(0,"Passos","Curitiba ou Passos",datetime.date(2022,11,11),datetime.date(2022,11,12))
+    print('Chegada real: '+ str(voo.get_chegada_real()))
+    return ('Chegada real: '+ str(voo.get_chegada_real()))
 
 
 def retornaRelatorioPDF(request):
