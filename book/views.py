@@ -84,4 +84,4 @@ def retornaRelatorioPDF(request):
     #                 inicio e fim sao datetimes na forma AAAA/MM/DD-HH:MM:SS
     
     relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
-    return FileResponse(buffer, as_attachment=True, filename='requirements.txt')
+    return FileResponse(open('test.pdf','rb'))
