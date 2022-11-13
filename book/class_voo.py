@@ -49,7 +49,7 @@ class Voo():
         self.aeroporto_destino = aeroporto_destino
 
     def set_aeroporto_partida(self, aeropoto_partida):
-        self.aeroporto_partida = aeroporto_partida 
+        self.aeroporto_partida = aeropoto_partida 
 
     def set_partida_prevista(self, partida_prevista):
         self.partida_prevista = partida_prevista  

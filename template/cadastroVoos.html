@@ -197,16 +197,19 @@
                     </div>
                         Destino do Voo: <form method="get">
                             <input type="text" placeholder=""> 
+                            {{form.destino_voo}}
                         </form>
                         Origem do Voo: <form method="get" >
                             <input type="text" placeholder="">
+                            {{form.origem_voo}}
                         </form>
                         Partida Prevista: <form method="get" >
                             <input type="date" placeholder="">
-                            {{example_form.my_date_field}}  
+                            {{form.partida_prevista}}  
                         </form>
                         Chegada Prevista: <form method="get" >
                             <input type="date" placeholder="">
+                            {{form.chegada_prevista}}  
                             <input type="submit" name="enviar" value="Enviar">    
                         </form>
 
