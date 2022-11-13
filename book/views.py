@@ -24,8 +24,7 @@ def cadastroVoos(request):
         return render(request, "cadastroVoos.html", context)
     else:
         form = Formulario_Cadastro_Voo(request.POST)
-        print (form.data['nome'])
-
+        print (form.data['destino_do_voo'])
         context = {}
         return render(request, "cadastroVoos.html", context)
 
