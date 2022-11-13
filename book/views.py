@@ -6,6 +6,7 @@ from book.class_voo import Voo
 from django.http import FileResponse
 
 from book.class_GeradorRelatorio import GeradorRelatorio
+from book.forms import Formulario_Cadastro_Voo
 # Create your views here.
 
 def login(request):
@@ -15,7 +16,18 @@ def inicial(request):
     return render(request, "inicial.html")
 
 def cadastroVoos(request):
-    return render(request, "cadastroVoos.html")
+    if request.method == "GET":
+        form = Formulario_Cadastro_Voo()
+        context = {
+            'form' : form
+        }
+        return render(request, "cadastroVoos.html", context)
+    else:
+        form = Formulario_Cadastro_Voo(request.POST)
+        print (form.data['nome'])
+
+        context = {}
+        return render(request, "cadastroVoos.html", context)
 
 def relatorios(request):
     retornaRelatorioPDF(request)
