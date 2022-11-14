@@ -22,10 +22,17 @@ def cadastroVoos(request):
             'form' : form
         }
         return render(request, "cadastroVoos.html", context)
+        
     else:
         form = Formulario_Cadastro_Voo(request.POST)
-        print (form.data['destino_do_voo'])
-        context = {}
+        if form.is_valid():
+            print (form.cleaned_data)
+            form = Formulario_Cadastro_Voo()
+            destino = form.data['destino_do_voo']
+    
+        context = {
+            'form' : form
+        }
         return render(request, "cadastroVoos.html", context)
 
 def relatorios(request):
