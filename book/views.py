@@ -94,12 +94,12 @@ def mostra_chegada_real(request):
 
 
 def retornaRelatorioPDF(request):
-    buffer = io.BytesIO()
-    buffer.seek(0)
+    #buffer = io.BytesIO()
+    #buffer.seek(0)          #Linhas inúteis
     
     relatorio = GeradorRelatorio(None, None, None) #GeradorRelatorio(tipo, inicio, fim)
     #                 tipo é um boolean (0 para Partidas e 1 para Chegadas)
     #                 inicio e fim sao datetimes na forma AAAA/MM/DD-HH:MM:SS
     
-    relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
-    return FileResponse(open('test.pdf','rb'))
+    arquivo = relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
+    return FileResponse(open(arquivo,'rb'))

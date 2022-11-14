@@ -1,6 +1,6 @@
 from fpdf import FPDF  # fpdf class
 import datetime
-from book import  models #importando os modelos de classses de BD
+from book import models #importando os modelos de classses de BD
 
 class GeradorRelatorio:
     
@@ -35,7 +35,8 @@ class GeradorRelatorio:
         
         
     def gera_pdf(self):
-
+        nome = str('Relatorio'+'.pdf')
+        
         pdf = FPDF(orientation='P', unit='mm', format='A4') #Cria arquivo PDF
         pdf.add_page() # Configs inicias e página
         pdf.set_font('Arial', '', 8)
@@ -55,16 +56,20 @@ class GeradorRelatorio:
             pdf.ln(-8)
             pdf.set_x(180)
             pdf.cell(30, 8, str(voo.chegada_real), 0, 1, 'L')
-
             if (pdf.get_y()) >= 297-25: #Anti-Transbordo
                 pdf.add_page()
-
+        pdf.set_xy(0, 270)
+        pdf.cell(210, 4, 'Relatório realizado em '+datetime.datetime.now().strftime('%Y/%m/%d-%H:%M:%S'), 0, 1, 'C')
         #Assinatura, título, autor e etc. 
         pdf.set_title('Relatório Administrativo do Aeroporto de Vira-Canecos')
         pdf.set_author('Sistema de Monitoração de Voos')
-        pdf.output('test.pdf','F')
+        pdf.output(name=nome, dest='F').encode('latin-1')
+        pdf.close()
+        
         if (self.debug):
             self.debug_log
+            
+        return str(nome)
 
     def debug_log():
         print('---------------------------------------------------------------------------')
