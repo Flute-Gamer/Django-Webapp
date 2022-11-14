@@ -57,5 +57,4 @@ class Companhia(models.Model):
 
         
 ##Tabela Data está excluida, visto que models.DateTime já gerencia o fuso
-##Na primeira imagem na tabela Voo, faltou aeropoto_partida
 ##Criada a classe companhia aerea

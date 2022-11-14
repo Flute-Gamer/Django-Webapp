@@ -4,7 +4,7 @@ import datetime
 # Create your tests here.
 from book.class_voo import Voo
 from django.http import FileResponse
-
+from book.models import Voo
 from book.class_GeradorRelatorio import GeradorRelatorio
 from book.forms import Formulario_Cadastro_Voo
 # Create your views here.
@@ -28,8 +28,21 @@ def cadastroVoos(request):
         if form.is_valid():
             print (form.cleaned_data)
             # form = Formulario_Cadastro_Voo()
+            codigo = form.cleaned_data['código_do_voo']
             destino = form.cleaned_data['destino_do_voo']
+            origem = form.cleaned_data['origem_do_voo'] 
+            partida_prev = form.cleaned_data['partida_prevista'] 
+            chegada_prev = form.cleaned_data['chegada_prevista'] 
             print('DESTINO: ' + str(destino))
+            
+            Voo.objects.create(
+            codigo_de_voo=codigo,
+            aeroporto_destino=destino,
+            aeroporto_partida=origem,
+            partida_prevista=partida_prev,
+            chegada_prevista=chegada_prev,
+            status=1
+            )
     
         context = {
             'form' : form
