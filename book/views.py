@@ -27,8 +27,9 @@ def cadastroVoos(request):
         form = Formulario_Cadastro_Voo(request.POST)
         if form.is_valid():
             print (form.cleaned_data)
-            form = Formulario_Cadastro_Voo()
-            destino = form.data['destino_do_voo']
+            # form = Formulario_Cadastro_Voo()
+            destino = form.cleaned_data['destino_do_voo']
+            print('DESTINO: ' + str(destino))
     
         context = {
             'form' : form
