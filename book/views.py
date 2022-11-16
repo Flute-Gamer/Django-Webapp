@@ -1,12 +1,16 @@
-import io
-from django.shortcuts import render
 import datetime
+import io
+
 # Create your tests here.
 # from book.class_voo import Voo
 from django.http import FileResponse
-from book.models import Voo
+from django.shortcuts import render
+
 from book.class_GeradorRelatorio import GeradorRelatorio
 from book.forms import Codigo_Voo_Monitora, Formulario_Cadastro_Voo
+from book.models import Voo
+from django.http.response import HttpResponse
+
 # Create your views here.
 
 def login(request):
@@ -27,7 +31,12 @@ def cadastroVoos(request):
         form = Formulario_Cadastro_Voo(request.POST)
         if form.is_valid():
             print (form.cleaned_data)
+            
             codigo = form.cleaned_data['código_do_voo']
+            verifica_codigo = Voo.objects.filter(codigo_de_voo=codigo).first()
+            if verifica_codigo:                 ##IF que nao deixa criar dois voos com mesmo código
+                return HttpResponse('Já existe um voo com esse código')
+            
             destino = form.cleaned_data['destino_do_voo']
             origem = form.cleaned_data['origem_do_voo'] 
             partida_prev = form.cleaned_data['partida_prevista'] 
