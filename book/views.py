@@ -6,7 +6,7 @@ import datetime
 from django.http import FileResponse
 from book.models import Voo
 from book.class_GeradorRelatorio import GeradorRelatorio
-from book.forms import Formulario_Cadastro_Voo
+from book.forms import Codigo_Voo_Monitora, Formulario_Cadastro_Voo
 # Create your views here.
 
 def login(request):
@@ -53,7 +53,26 @@ def relatorios(request):
     # Simplesmente renderização, quem manipula a criação do relatório é o html relatorios.html, na function downloadRelatorio()
     return render(request, "relatorios.html")
 
-def monitoraVoos(request):
+def escolheVooMonitorado(request):
+    # Receptor dos dados usados em `monitoraVoos()`
+    if request.method == "GET":
+        form = Codigo_Voo_Monitora()
+        context = {
+            'form' : form
+        }
+        return render(request, "escolheVoo.html")
+
+        
+    else:
+        form = Codigo_Voo_Monitora(request.POST)
+        if form.is_valid():
+            print (form.cleaned_data)    
+        context = {
+            'form' : form
+        }
+        monitoraVoos(request,form.cleaned_data['codigo_voo'])
+
+def monitoraVoos(request,codigo_voo):
     # Como queries são feitas hardcoded, utilizar forms (Útil no desenvolvimento da busca em outras )
     context = {
         'voo_mostrado': mostra_codigo_do_voo(5),
