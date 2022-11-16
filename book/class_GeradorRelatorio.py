@@ -59,7 +59,7 @@ class GeradorRelatorio:
             if (pdf.get_y()) >= 297-25: #Anti-Transbordo
                 pdf.add_page()
         pdf.set_xy(0, 270)
-        pdf.cell(210, 4, 'Relatório realizado em '+datetime.datetime.now().strftime('%Y/%m/%d-%H:%M:%S'), 0, 1, 'C')
+        pdf.cell(210, 4, 'Relatório realizado em '+datetime.datetime.now().strftime('%Y/%m/%d-%H:%M:%S'), 0, 1, 'C') #TODO:Atualizar para GMT-3
         #Assinatura, título, autor e etc. 
         pdf.set_title('Relatório Administrativo do Aeroporto de Vira-Canecos')
         pdf.set_author('Sistema de Monitoração de Voos')

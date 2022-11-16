@@ -1,5 +1,4 @@
 class Voo():
-
     ##Construir Classe
     def __init__(self, status, aeroporto_destino, aeroporto_partida, partida_prevista, chegada_prevista):
         self.codigo_de_voo     = 0

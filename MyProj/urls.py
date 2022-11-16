@@ -24,5 +24,6 @@ urlpatterns = [
     path('cadastroVoos',views.cadastroVoos),
     path('relatorios',views.relatorios),
     path('download',views.retornaRelatorioPDF),
-    path('monitoraVoos',views.monitoraVoos)
+    path('monitoraVoos',views.monitoraVoos),
+    #path('erros',views.errors) #Faz muito sentido colocar páginas de erro com o erro passado como argumento
 ]
