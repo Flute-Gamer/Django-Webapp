@@ -199,6 +199,16 @@
                             {% csrf_token %}
     
                             {{ form.as_p }}
+
+                            {% if messages %}
+                        
+                                    {% for message in messages %}
+                                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                    {% endfor %}
+                                
+                            {% endif %}
+
+                            <br>
                          
                             <input type="submit" value="Enviar">
 

@@ -1,20 +1,39 @@
 import datetime
 import io
-
-# Create your tests here.
+from django.contrib import messages
 # from book.class_voo import Voo
 from django.http import FileResponse
 from django.shortcuts import render
-
 from book.class_GeradorRelatorio import GeradorRelatorio
 from book.forms import Codigo_Voo_Monitora, Formulario_Cadastro_Voo
 from book.models import Voo
 from django.http.response import HttpResponse
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 
 def login(request):
-    return render(request, "login.html")
+    if request.method == 'GET':
+        return render(request, "login.html")
+    else:
+        usuario = request.POST.get('login')
+        senha = request.POST.get('senha')
+
+        user = authenticate(usuario=usuario, senha=senha)
+
+        if user:
+            login(request, user)
+            return HttpResponse('Autenticado')
+        else:
+            i = i + 1
+            print(i)
+            if i < 3:
+                messages.success(request, 'Usuário ou senha inválidas.')
+                return render(request, "login.html")
+            else:
+                messages.success(request, 'Usuário ou senha inválidas.')
+                return render(request, "login_fail.html")
+
 
 def inicial(request):
     return render(request, "inicial.html")
@@ -34,8 +53,13 @@ def cadastroVoos(request):
             
             codigo = form.cleaned_data['código_do_voo']
             verifica_codigo = Voo.objects.filter(codigo_de_voo=codigo).first()
+           
             if verifica_codigo:                 ##IF que nao deixa criar dois voos com mesmo código
-                return HttpResponse('Já existe um voo com esse código')
+                messages.success(request, 'Já existe voo com esse código de voo.')
+                context = {
+                    'form' : form
+                 }
+                return render(request, "cadastroVoos.html", context)
             
             destino = form.cleaned_data['destino_do_voo']
             origem = form.cleaned_data['origem_do_voo'] 
@@ -52,7 +76,7 @@ def cadastroVoos(request):
             )
                 #Refresh
                 #Error msg
-    
+        messages.success(request, 'Voo cadastrado com sucesso.')
         context = {
             'form' : form
         }
