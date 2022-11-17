@@ -1,6 +1,7 @@
 import io
 import json
-from urllib.parse import urlencode
+
+from urllib.parse import urlencode, unquote
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.http import FileResponse
@@ -125,8 +126,15 @@ def relatorios(request):
         data_inicio = form.cleaned_data['data_inicio']
         data_fim = form.cleaned_data['data_fim']
         tipo_relatorio =  form.cleaned_data['tipo']
-        retornaRelatorioPDF(request,tipo_relatorio,data_inicio,data_fim)
-        return render(request, "relatorios.html",context)
+        # retornaRelatorioPDF(request,tipo_relatorio,data_inicio,data_fim)
+        params={
+            'data_inicio':data_inicio,
+            'data_fim':data_fim,
+            'tipo_relatorio':tipo_relatorio
+        }
+        params=urlencode(params)
+        # return render(request, "relatorios.html",context)
+        return redirect(f"download/relatorio?{params}")
 
 def escolheVooMonitorado(request):
     # Receptor dos dados usados em `monitoraVoos()`
@@ -248,10 +256,20 @@ def mostra_chegada_real(codigo_voo):
     return ('Chegada real: '+ str(voo.chegada_real))
 
 
-def retornaRelatorioPDF(request,tipo,data_inicio,data_fim):
-    print(data_inicio)
+def retornaRelatorioPDF(request):
+    path=request.get_full_path()
+    coiso=path.split('?')
+    unquoted = unquote(coiso[1]) 
+    print(unquote(coiso[1]))
+    data_inicio,data_fim,tipo = unquoted.split('&')
+    data_fim = data_fim.split('+')
+    data_inicio = data_inicio.split('+')
+    print('VERIFICA SPLIT: ' + str(data_fim))
+    dia_inicio = data_inicio[0].split('=')[1]
+    dia_fim = data_fim[0].split('=')[1]
+    data_inicio = dia_inicio+ ' ' + data_inicio[1]
+    data_fim = dia_fim+ ' ' + data_fim[1]
     print(data_fim)
-    
     relatorio = GeradorRelatorio(tipo=tipo, inicio=data_inicio, fim=data_fim) #GeradorRelatorio(tipo, inicio, fim)
     #                 tipo é um boolean (0 para Partidas e 1 para Chegadas)
     #                 inicio e fim sao datetimes na forma AAAA/MM/DD-HH:MM:SS 
