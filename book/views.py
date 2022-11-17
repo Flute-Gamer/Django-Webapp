@@ -39,7 +39,7 @@ def login(request):
         user = authenticate(username=usuario, password=senha)
         if user:
             login_django(request, user)
-            return HttpResponse('Autenticado')
+            return render(request, "inicial.html")
         else:
             context = {'i':count}
             print(count)
