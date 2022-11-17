@@ -153,6 +153,7 @@ def monitoraVoos(request):
         return render(request, "monitoraVoos.html", context)
     
     else:
+        print("entrou no else")
         form = Formulario_Cadastro_Voo(request.POST)
         print("chegou aqui")
         if form.is_valid():
