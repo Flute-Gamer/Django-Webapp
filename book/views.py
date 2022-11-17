@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.http import FileResponse
 from django.shortcuts import render
 from book.class_GeradorRelatorio import GeradorRelatorio
-from book.forms import Codigo_Voo_Monitora, DateTimeField_ERelatorio, Formulario_Cadastro_Voo
+from book.forms import Codigo_Voo_Monitora, DateTimeField_ERelatorio, Formulario_Cadastro_Voo, Formulario_Atualiza_Voos
 from book.models import Voo
 from django.http.response import HttpResponse
 from django.contrib.auth import authenticate, login
@@ -83,6 +83,12 @@ def cadastroVoos(request):
             origem = form.cleaned_data['origem_do_voo'] 
             partida_prev = form.cleaned_data['partida_prevista'] 
             chegada_prev = form.cleaned_data['chegada_prevista'] 
+            if (partida_prev > chegada_prev):  ## If não permite que voo possua chegada anterior a destino
+                messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                context = {
+                    'form' : form
+                 }
+                return render(request, "cadastroVoos.html", context)
             print('DESTINO: ' + str(destino))
             Voo.objects.create(
             codigo_de_voo=codigo,
@@ -167,9 +173,9 @@ def monitoraVoos(request):
             'destino_mostrado': mostra_aeroporto_destino(codigo_voo),
             'partida_mostrada': mostra_aeroporto_partida(codigo_voo),
             'partida_prevista' : mostra_partida_prevista(codigo_voo),
-            'partida_real' : mostra_partida_real(codigo_voo),
+            'partida_real' : mostra_partida_real(codigo_voo) if mostra_partida_real(codigo_voo) == "None" else "Não há partida real ainda",
             'chegada_prevista' : mostra_chegada_prevista(codigo_voo),
-            'chegada_real' : mostra_chegada_real(codigo_voo),
+            'chegada_real' : mostra_chegada_real(codigo_voo) if mostra_chegada_real(codigo_voo) == "None" else "Não há chegada real ainda",
             'form' : form
         }
         return render(request, "monitoraVoos.html", context)
@@ -186,8 +192,6 @@ def monitoraVoos(request):
             print(verifica_codigo)
             if verifica_codigo:                 ##IF que deleta se código está na basa de dados
                 deleta_voo(codigo)
-                print("Deletou")
-                print("passou 2")
                 messages.success(request, 'Voo deletado com sucesso.')
                 context = {
                     'form' : form
@@ -271,3 +275,115 @@ def retornaRelatorioPDF(request):
     
     arquivo = relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
     return FileResponse(open(arquivo,'rb'))
+
+def atualizaVoos(request):
+    if request.method == "GET":
+        form = Formulario_Atualiza_Voos()
+        context = {
+            'form' : form
+        }
+        return render(request, "atualizaVoos.html", context)
+        
+    else:
+        form = Formulario_Atualiza_Voos(request.POST)
+        if form.is_valid():
+            print (form.cleaned_data)
+            codigo = form.cleaned_data['código_do_voo']
+            verifica_codigo = Voo.objects.filter(codigo_de_voo=codigo).first()
+           
+            if verifica_codigo is None:                 ##IF que nao deixa criar dois voos com mesmo código
+                messages.success(request, 'Não existe voo para ser atualizado')
+                context = {
+                    'form' : form
+                 }
+                return render(request, "atualizaVoos.html", context)
+            voo = Voo.objects.get(codigo_de_voo=codigo)
+            destino = form.cleaned_data['destino_do_voo']
+            origem = form.cleaned_data['origem_do_voo'] 
+            partida_prev = form.cleaned_data['partida_prevista'] 
+            chegada_prev = form.cleaned_data['chegada_prevista'] 
+            partida_r = form.cleaned_data['partida_real'] 
+            chegada_r = form.cleaned_data['chegada_real'] 
+            if (destino is not None):
+                voo.aeroporto_destino = destino
+                voo.save()
+            if (origem is not None):
+                voo.aeroporto_partida = origem
+                voo.save()
+            ### Partida e Chegada Previstas
+            if (partida_prev and chegada_prev is not None):
+                if (partida_prev > chegada_prev):  ## If não permite que voo possua chegada anterior a destino
+                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
+                voo.partida_prevista = partida_prev
+                voo.chegada_prevista = chegada_prev
+                voo.save()
+            if (partida_prev is not None and chegada_prev is None):
+                if (partida_prev > voo.chegada_prevista):
+                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
+                voo.partida_prevista = partida_prev
+                voo.save()
+            if (chegada_prev is not None and partida_prev is None):
+                if (voo.partida_prevista > chegada_prev):
+                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
+                voo.chegada_prevista= chegada_prev
+                voo.save()
+
+
+            
+            
+### Partida e Chegada Real
+
+        if (partida_r and chegada_r is not None):
+                if (partida_r> chegada_r):  ## If não permite que voo possua chegada anterior a destino
+                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
+                voo.partida_real = partida_r
+                voo.chegada_real = chegada_r
+                voo.save()
+        if (partida_r is not None and chegada_r is None):
+            if (voo.chegada_real is not None):
+                if (partida_r > voo.chegada_real):
+                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
+            voo.partida_real = partida_r
+            voo.save()
+
+        if (chegada_r is not None and partida_r is None):
+            if (voo.partida_real is not None):
+                if (voo.partida_real > chegada_r):
+                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
+            voo.partida_real = partida_r
+            voo.save()
+
+            
+
+                #Refresh
+                #Error msg
+        messages.success(request, 'Atualizações alteradas com sucesso.')
+        context = {
+            'form' : form
+        }
+        return render(request, "atualizaVoos.html", context)
+
