@@ -24,10 +24,8 @@ class GeradorRelatorio:
         #     partida_prevista=datetime.date(2022,6,10),
         #     chegada_prevista=datetime.date(2022,6,11),
         #     status=1)
-        inicio="2020-01-01"
-        fim="2024-01-01"
-        print("INICIO: " + inicio)
-        print(fim)
+        # inicio = inicio.strftime("%Y-%m-%d %H:%M:%S")
+        # fim = fim.strftime("%Y-%m-%d %H:%M:%S")
         voar = Voo.objects.filter(chegada_prevista__range=[inicio, fim])
 
         self.registros.clear()

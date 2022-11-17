@@ -22,16 +22,6 @@
     <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
 
     <script type="text/javascript">
-        function downloadRelatorio(){
-            var tipo = document.querySelector('input[name="tipo_relatorio"]:checked').value;
-            console.log(tipo)
-            if(tipo === "partida"){
-                window.location.assign("download");
-            }
-            else{
-                window.location.assign("inicial");
-            }
-        }
         function redirectRelatorio(){
             window.location.assign("relatorios");
         }
@@ -201,8 +191,8 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Relatório de Voos </h1>
-                        <button onclick="downloadRelatorio()">Gerar Relatório</button>
+                        <!-- <h1 class="h3 mb-0 text-gray-800">Relatório de Voos </h1>
+                        <button onclick="downloadRelatorio()">Gerar Relatório</button> -->
                         <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i>Gerar Relatório</a> -->
                     </div>
