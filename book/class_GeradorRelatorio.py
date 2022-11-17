@@ -1,6 +1,6 @@
 from fpdf import FPDF  # fpdf class
 import datetime
-from book import models #importando os modelos de classses de BD
+from book.models import Voo #importando os modelos de classses de BD
 
 class GeradorRelatorio:
     
@@ -18,20 +18,29 @@ class GeradorRelatorio:
 
 
         #Teste hardcoded     
-        voar = models.Voo(codigo_de_voo=1,
-            aeroporto_destino='Congonhas-SP',
-            aeroporto_partida='Passos-MG',
-            partida_prevista=datetime.date(2022,6,10),
-            chegada_prevista=datetime.date(2022,6,11),
-            status=1)
+        # voar = models.Voo(codigo_de_voo=1,
+        #     aeroporto_destino='Congonhas-SP',
+        #     aeroporto_partida='Passos-MG',
+        #     partida_prevista=datetime.date(2022,6,10),
+        #     chegada_prevista=datetime.date(2022,6,11),
+        #     status=1)
+        inicio="2020-01-01"
+        fim="2024-01-01"
+        print("INICIO: " + inicio)
+        print(fim)
+        voar = Voo.objects.filter(chegada_prevista__range=[inicio, fim])
+
         self.registros.clear()
-        self.registros.append(voar)
-        self.registros.append(voar)
+        for i in voar.iterator():
+            self.registros.append(i)
+        # self.registros.append(voar)
         #Ok, esse é o resultado esperado:
         #"       Relatório Administrativo de Chegadas
         #Congonhas-SP                               None
         #Congonhas-SP                               None"
         #Não importa quantas vezes vc atualize o relatório
+
+        
         
         
     def gera_pdf(self):
