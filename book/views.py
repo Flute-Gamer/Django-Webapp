@@ -82,6 +82,12 @@ def cadastroVoos(request):
             origem = form.cleaned_data['origem_do_voo'] 
             partida_prev = form.cleaned_data['partida_prevista'] 
             chegada_prev = form.cleaned_data['chegada_prevista'] 
+            if (partida_prev > chegada_prev):  ## If não permite que voo possua chegada anterior a destino
+                messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                context = {
+                    'form' : form
+                 }
+                return render(request, "cadastroVoos.html", context)
             print('DESTINO: ' + str(destino))
             Voo.objects.create(
             codigo_de_voo=codigo,
