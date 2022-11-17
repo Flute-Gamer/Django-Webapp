@@ -116,6 +116,10 @@ def relatorios(request):
         context = {
             'form' : form
         }
+        data_inicio = form.cleaned_data['data_inicio']
+        data_fim = form.cleaned_data['data_fim']
+        tipo_relatorio =  form.cleaned_data['tipo']
+        retornaRelatorioPDF(request,tipo_relatorio,data_inicio,data_fim)
         return render(request, "relatorios.html",context)
 
 def escolheVooMonitorado(request):
@@ -238,10 +242,11 @@ def mostra_chegada_real(codigo_voo):
     return ('Chegada real: '+ str(voo.chegada_real))
 
 
-def retornaRelatorioPDF(request):
+def retornaRelatorioPDF(request,tipo,data_inicio,data_fim):
+    print(data_inicio)
+    print(data_fim)
     
-    
-    relatorio = GeradorRelatorio(None, None, None) #GeradorRelatorio(tipo, inicio, fim)
+    relatorio = GeradorRelatorio(tipo=tipo, inicio=data_inicio, fim=data_fim) #GeradorRelatorio(tipo, inicio, fim)
     #                 tipo é um boolean (0 para Partidas e 1 para Chegadas)
     #                 inicio e fim sao datetimes na forma AAAA/MM/DD-HH:MM:SS 
     #                 (Utilizar a seguinte parte da documentação: https://docs.djangoproject.com/en/4.1/ref/forms/fields/#datetimefield )

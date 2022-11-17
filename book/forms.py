@@ -12,5 +12,8 @@ class Codigo_Voo_Monitora(forms.Form):
     codigo_voo = forms.IntegerField(min_value=0)
 
 class DateTimeField_ERelatorio(forms.Form):
+    CHOICES=[('partida','Relatório de Partida'),
+         ('chegada','Relatório de Chegada')]
+    tipo = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
     data_inicio = forms.DateTimeField(error_messages={'invalid': "Esta data é inválida!"})
     data_fim = forms.DateTimeField(error_messages={'invalid': "Esta data é inválida!"})

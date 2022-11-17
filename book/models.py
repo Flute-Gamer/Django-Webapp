@@ -28,7 +28,6 @@ class Funcionario(models.Model): ##cara da companhia
     salario = models.IntegerField(null = False)
     endereco = models.CharField(max_length=200, null=False)
     senha = models.CharField(max_length=40, null=False)
-    tentativas_login = models.CharField(max_length=4,null=False)
     class Meta:
         db_table = 'funcionario'
 
