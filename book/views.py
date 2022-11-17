@@ -10,11 +10,20 @@ from book.forms import Codigo_Voo_Monitora, DateTimeField_ERelatorio, Formulario
 from book.models import Voo
 from django.http.response import HttpResponse
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.contrib.auth import login as login_django
 
 # Create your views here.
 
 def login(request):
     if request.method == 'GET':
+        usuario_check = User.objects.filter(username="Igor").exists()
+        if usuario_check == False:
+                print("criei o buseto")
+                user_criar = "Igor"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
         return render(request, "login.html")
     else:
         if "load_count" in request.session:
@@ -25,11 +34,12 @@ def login(request):
         request.session["load_count"] = count
         usuario = request.POST.get('login')
         senha = request.POST.get('senha')
-
-        user = authenticate(usuario=usuario, senha=senha)
+        print(usuario)
+        print(senha)
+        user = authenticate(username=usuario, password=senha)
         if user:
-            login(request, user)
-            return HttpResponse('Autenticado')
+            login_django(request, user)
+            return render(request, "inicial.html")
         else:
             context = {'i':count}
             print(count)
