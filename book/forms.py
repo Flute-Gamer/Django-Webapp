@@ -9,7 +9,8 @@ class Formulario_Cadastro_Voo(forms.Form):
     chegada_prevista = forms.DateField(error_messages={'invalid': "Esta data é inválida!"})
 
 class Codigo_Voo_Monitora(forms.Form):
-    codigo_voo = forms.IntegerField(min_value=0)
+    codigo_voo = forms.IntegerField(min_value=0,required=False)
+    proximo = forms.CheckboxInput()
 
 class DateTimeField_ERelatorio(forms.Form):
     CHOICES=[('partida','Relatório de Partida'),

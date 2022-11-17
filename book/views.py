@@ -167,9 +167,9 @@ def monitoraVoos(request):
             'destino_mostrado': mostra_aeroporto_destino(codigo_voo),
             'partida_mostrada': mostra_aeroporto_partida(codigo_voo),
             'partida_prevista' : mostra_partida_prevista(codigo_voo),
-            'partida_real' : mostra_partida_real(codigo_voo),
+            'partida_real' : mostra_partida_real(codigo_voo) if mostra_partida_real(codigo_voo) == "None" else "Não há partida real ainda",
             'chegada_prevista' : mostra_chegada_prevista(codigo_voo),
-            'chegada_real' : mostra_chegada_real(codigo_voo),
+            'chegada_real' : mostra_chegada_real(codigo_voo) if mostra_chegada_real(codigo_voo) == "None" else "Não há chegada real ainda",
             'form' : form
         }
         return render(request, "monitoraVoos.html", context)
@@ -186,8 +186,6 @@ def monitoraVoos(request):
             print(verifica_codigo)
             if verifica_codigo:                 ##IF que deleta se código está na basa de dados
                 deleta_voo(codigo)
-                print("Deletou")
-                print("passou 2")
                 messages.success(request, 'Voo deletado com sucesso.')
                 context = {
                     'form' : form
