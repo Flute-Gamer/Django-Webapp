@@ -339,10 +339,10 @@ def atualizaVoos(request):
                     voo.save()
                 else:
                    messages.success(request, 'Não é retornar a um status anterior ao atual') 
-            if (destino is not None):
+            if (destino is not ''):
                 voo.aeroporto_destino = destino
                 voo.save()
-            if (origem is not None):
+            if (origem is not ''):
                 voo.aeroporto_partida = origem
                 voo.save()
             ### Partida e Chegada Previstas

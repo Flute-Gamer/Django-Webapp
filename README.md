@@ -37,4 +37,4 @@ Para executar o projeto, é necessário estar na pasta do onde ele foi clonado a
 
  Assim, existirá um link que é executado em um servidor local o qual pode ser aberto por qualquer navegador.
 
- Primeira página: http://127.0.0.1:8000/login
+ Primeira página: http://127.0.0.1:8000/login/auth
