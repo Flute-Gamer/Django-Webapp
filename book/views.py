@@ -109,21 +109,59 @@ def escolheVooMonitorado(request):
         return redirect(f'monitoraVoos/vooEscolhido?{parameters}')
 
 def monitoraVoos(request):
-    print(request.get_full_path())
-    codigo_voo=request.get_full_path()
-    codigo_voo=codigo_voo.split('=')[1]
-    print(codigo_voo)
-    context = {
-        'voo_mostrado': mostra_codigo_do_voo(codigo_voo),
-        'status_mostrado': mostra_status_do_voo(codigo_voo),
-        'destino_mostrado': mostra_aeroporto_destino(codigo_voo),
-        'partida_mostrada': mostra_aeroporto_partida(codigo_voo),
-        'partida_prevista' : mostra_partida_prevista(codigo_voo),
-        'partida_real' : mostra_partida_real(codigo_voo),
-        'chegada_prevista' : mostra_chegada_prevista(codigo_voo),
-        'chegada_real' : mostra_chegada_real(codigo_voo)
-    }
-    return render(request, "monitoraVoos.html", context)
+    if request.method == "GET":
+        form = Codigo_Voo_Monitora()
+        print(request.get_full_path())
+        codigo_voo=request.get_full_path()
+        codigo_voo=codigo_voo.split('=')[1]
+        print(codigo_voo)
+        context = {
+            'voo_mostrado': mostra_codigo_do_voo(codigo_voo),
+            'status_mostrado': mostra_status_do_voo(codigo_voo),
+            'destino_mostrado': mostra_aeroporto_destino(codigo_voo),
+            'partida_mostrada': mostra_aeroporto_partida(codigo_voo),
+            'partida_prevista' : mostra_partida_prevista(codigo_voo),
+            'partida_real' : mostra_partida_real(codigo_voo),
+            'chegada_prevista' : mostra_chegada_prevista(codigo_voo),
+            'chegada_real' : mostra_chegada_real(codigo_voo),
+            'form' : form
+        }
+        return render(request, "monitoraVoos.html", context)
+    
+    else:
+        form = Formulario_Cadastro_Voo(request.POST)
+        if form.is_valid():
+            print (form.cleaned_data)
+            
+            codigo = form.cleaned_data['código_do_voo']
+            verifica_codigo = Voo.objects.filter(codigo_voo=codigo).first()
+           
+            if verifica_codigo:                 ##IF que deleta se código está na basa de dados
+                deleta_voo(codigo)
+                print("Deletou")
+                messages.success(request, 'Voo deletado com sucesso.')
+                context = {
+                    'form' : form
+                 }
+                return render(request, "monitoraVoos.html", context)
+            
+            else:
+                messages.success(request, 'Voo não encontrado na nossa base de dados.')
+                context = {
+                        'form' : form
+                    }
+                return render(request, "monitoraVoos.html", context)
+
+def deleta_voo(codigo_voo):
+    voo =  Voo.objects.get(codigo_de_voo=codigo_voo)
+    voo.chegada_real.delete()
+    voo.chegada_prevista.delete()
+    voo.partida_real.delete()
+    voo.partida_prevista.delete()
+    voo.aeroporto_partida.delete()
+    voo.aeroporto_destino.delete()
+    voo.status.delete()
+    voo.codigo_de_voo.delte()
 
 def mostra_codigo_do_voo(codigo_voo):
     voo = Voo.objects.get(codigo_de_voo=codigo_voo)
