@@ -1,8 +1,7 @@
 import io
-from django.shortcuts import render
-import datetime
-# Create your tests here.
-# from book.class_voo import Voo
+import json
+from urllib.parse import urlencode
+from django.shortcuts import redirect, render
 from django.http import FileResponse
 from book.models import Voo
 from book.class_GeradorRelatorio import GeradorRelatorio
@@ -60,7 +59,7 @@ def escolheVooMonitorado(request):
         context = {
             'form' : form
         }
-        return render(request, "escolheVoo.html")
+        return render(request, "escolheVoo.html",context)
 
         
     else:
@@ -70,10 +69,13 @@ def escolheVooMonitorado(request):
         context = {
             'form' : form
         }
-        monitoraVoos(request,form.cleaned_data['codigo_voo'])
+        parameters = urlencode(form.cleaned_data)
+        return redirect(f'monitoraVoos/vooEscolhido?{parameters}')
 
-def monitoraVoos(request,codigo_voo):
-    # Como queries são feitas hardcoded, utilizar forms (Útil no desenvolvimento da busca em outras )
+def monitoraVoos(request):
+    print(request.body)
+    body_unicode = request.body.decode('utf-8') #Problema decodificando
+    body = json.loads(body_unicode)
     context = {
         'voo_mostrado': mostra_codigo_do_voo(5),
         'status_mostrado': mostra_status_do_voo(5),

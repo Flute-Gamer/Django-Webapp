@@ -196,10 +196,10 @@
                             class="fas fa-download fa-sm text-white-50"></i>Voo:</a>
                         </div>
                         <p>Escolha o voo que você quer monitorar:</p>
-                        <form action = "escolheVoo" method = "post">
+                        <form method = "post">
                             {% csrf_token %}
     
-                            {{ form.as_p }}
+                            {{ form }}
                          
                             <input type="submit" value="Enviar">
 

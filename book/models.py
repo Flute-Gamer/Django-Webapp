@@ -27,6 +27,7 @@ class Funcionario(models.Model): ##cara da companhia
     email = models.CharField(max_length=200, null=False)
     salario = models.IntegerField(null = False)
     endereco = models.CharField(max_length=200, null=False)
+    senha = models.CharField(max_length=40, null=False)
     class Meta:
         db_table = 'funcionario'
 
