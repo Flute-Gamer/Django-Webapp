@@ -31,6 +31,9 @@
         function redirectCadastra(){
             window.location.assign("cadastroVoos")
         }
+        function redirectAtualizacao(){
+            window.location.assign("atualizaVoos")
+        }
     </script>
 
 </head>
@@ -68,7 +71,7 @@
             <div class="sidebar-heading">
                 Interface
             </div>
-            {% if usuario == Igor %}
+            {% if usuario == 'Torre' %}
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo" onclick="redirectRelatorio()">
@@ -76,7 +79,8 @@
                 </a>
             </li>
             {% endif %}
-
+            
+            {% if usuario == 'Torre' %}
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities" onclick="redirectMonitora()">
@@ -84,7 +88,9 @@
                     <span>Monitora Voos</span>
                 </a>
             </li>
+            {% endif %}
 
+            {% if usuario == 'Funcionario' %}
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities" onclick="redirectCadastra()">
@@ -92,7 +98,17 @@
                     <span>Cadastra Voos</span>
                 </a>
             </li>
+            {% endif %}
 
+            {% if usuario == 'Piloto' %}
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities" onclick="redirectAtualizacao()">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Atualiza Voo</span>
+                </a>
+            </li>
+            {% endif %}
             
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
