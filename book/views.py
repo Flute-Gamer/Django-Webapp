@@ -105,8 +105,12 @@ def escolheVooMonitorado(request):
         context = {
             'form' : form
         }
-        parameters = urlencode(form.cleaned_data)
-        return redirect(f'monitoraVoos/vooEscolhido?{parameters}')
+        if Voo.objects.filter(codigo_de_voo=form.cleaned_data['codigo_voo']).exists():
+            parameters = urlencode(form.cleaned_data)
+            return redirect(f'monitoraVoos/vooEscolhido?{parameters}')
+        else:
+            messages.success(request, 'Código de Voo inexistente.')
+            return render(request, "escolheVoo.html",context)
 
 def monitoraVoos(request):
     if request.method == "GET":
@@ -132,10 +136,17 @@ def monitoraVoos(request):
         form = Formulario_Cadastro_Voo(request.POST)
         if form.is_valid():
             print (form.cleaned_data)
+<<<<<<< HEAD
             print("passou 1")
             codigo = form.cleaned_data['codigo_voo']
             verifica_codigo = Voo.objects.filter(codigo_voo=codigo).first()
            
+=======
+            
+            codigo = form.cleaned_data['código_do_voo']
+            verifica_codigo = Voo.objects.filter(codigo_voo=codigo).exists()
+            print(verifica_codigo)
+>>>>>>> 13ff53d94bed0612cce231824b7289a67e7533dc
             if verifica_codigo:                 ##IF que deleta se código está na basa de dados
                 deleta_voo(codigo)
                 print("Deletou")
