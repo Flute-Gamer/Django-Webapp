@@ -10,17 +10,23 @@ from book.forms import Codigo_Voo_Monitora, DateTimeField_ERelatorio, Formulario
 from book.models import Voo
 from django.http.response import HttpResponse
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 def login(request):
     if request.method == 'GET':
+       ## username = "Igor"
+       ## senha_criar= "1234"
+       ## user_criar = User.objects.create_user(username=username, password=senha_criar)
+       ## user_criar = form.save(commit=False)
+       ## user_criar.save()
+
         return render(request, "login.html")
     else:
         usuario = request.POST.get('login')
         senha = request.POST.get('senha')
-
-        user = authenticate(usuario=usuario, senha=senha)
+        user = authenticate(username=usuario, password=senha)
         if user:
             login(request, user)
             return HttpResponse('Autenticado')
