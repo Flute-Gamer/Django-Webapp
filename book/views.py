@@ -20,7 +20,6 @@ def login(request):
     if request.method == 'GET':
         usuario_check = User.objects.filter(username="Igor").exists()
         if usuario_check == False:
-                print("criei o buseto")
                 user_criar = "Igor"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
@@ -40,6 +39,7 @@ def login(request):
         user = authenticate(username=usuario, password=senha)
         if user:
             login_django(request, user)
+            request.session["logged_user"]=usuario
             return redirect("../../inicial")
         else:
             context = {'i':count}
@@ -54,7 +54,10 @@ def login(request):
 
 
 def inicial(request):
-    return render(request, "inicial.html")
+    usuario = request.session["logged_user"]
+    print('Logado como ' + usuario)
+    context = {'usuario':usuario}
+    return render(request, "inicial.html",context)
 
 def cadastroVoos(request):
     if request.method == "GET":
@@ -308,6 +311,7 @@ def atualizaVoos(request):
             if  status is not None:
                 if voo.status < status:
                     voo.status = status
+                    voo.save()
                 else:
                    messages.success(request, 'Não é retornar a um status anterior ao atual') 
             if (destino is not None):

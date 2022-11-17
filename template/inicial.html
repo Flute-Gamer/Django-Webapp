@@ -68,13 +68,14 @@
             <div class="sidebar-heading">
                 Interface
             </div>
-
+            {% if usuario == Igor %}
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo" onclick="redirectRelatorio()">
                     <span>Relatórios</span>
                 </a>
             </li>
+            {% endif %}
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -151,7 +152,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuário</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ usuario }}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{% static 'img/caixeta.jpg' %}">
                             </a>
