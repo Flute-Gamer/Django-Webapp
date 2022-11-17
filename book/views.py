@@ -39,7 +39,7 @@ def login(request):
         user = authenticate(username=usuario, password=senha)
         if user:
             login_django(request, user)
-            return render(request, "inicial.html")
+            return redirect("../../inicial")
         else:
             context = {'i':count}
             print(count)
@@ -163,14 +163,14 @@ def monitoraVoos(request):
         return render(request, "monitoraVoos.html", context)
     
     else:
-        print("entrou no else")
-        form = Formulario_Cadastro_Voo(request.POST)
+        form = Codigo_Voo_Monitora(request.POST)
         print("chegou aqui")
+        print(type(form))
         if form.is_valid():
             print (form.cleaned_data)
             
-            codigo = form.cleaned_data['código_do_voo']
-            verifica_codigo = Voo.objects.filter(codigo_voo=codigo).exists()
+            codigo = form.cleaned_data['codigo_voo']
+            verifica_codigo = Voo.objects.filter(codigo_de_voo=codigo).exists()
             print(verifica_codigo)
             if verifica_codigo:                 ##IF que deleta se código está na basa de dados
                 deleta_voo(codigo)
@@ -189,17 +189,12 @@ def monitoraVoos(request):
                         'form' : form
                     }
                 return render(request, "monitoraVoos.html", context)
+        else:
+            return render(request, "monitoraVoos.html")
 
 def deleta_voo(codigo_voo):
     voo =  Voo.objects.get(codigo_de_voo=codigo_voo)
-    voo.chegada_real.delete()
-    voo.chegada_prevista.delete()
-    voo.partida_real.delete()
-    voo.partida_prevista.delete()
-    voo.aeroporto_partida.delete()
-    voo.aeroporto_destino.delete()
-    voo.status.delete()
-    voo.codigo_de_voo.delte()
+    voo.delete()
     return
 
 def mostra_codigo_do_voo(codigo_voo):
