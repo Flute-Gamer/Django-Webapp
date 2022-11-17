@@ -303,7 +303,13 @@ def atualizaVoos(request):
             partida_prev = form.cleaned_data['partida_prevista'] 
             chegada_prev = form.cleaned_data['chegada_prevista'] 
             partida_r = form.cleaned_data['partida_real'] 
-            chegada_r = form.cleaned_data['chegada_real'] 
+            chegada_r = form.cleaned_data['chegada_real']
+            status = form.cleaned_data['status']
+            if  status is not None:
+                if voo.status < status:
+                    voo.status = status
+                else:
+                   messages.success(request, 'Não é retornar a um status anterior ao atual') 
             if (destino is not None):
                 voo.aeroporto_destino = destino
                 voo.save()
