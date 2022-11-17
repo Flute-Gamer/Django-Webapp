@@ -17,6 +17,12 @@ def login(request):
     if request.method == 'GET':
         return render(request, "login.html")
     else:
+        if "load_count" in request.session:
+            count = request.session["load_count"] + 1
+        else:
+            count = 1
+
+        request.session["load_count"] = count
         usuario = request.POST.get('login')
         senha = request.POST.get('senha')
 
@@ -25,17 +31,9 @@ def login(request):
             login(request, user)
             return HttpResponse('Autenticado')
         else:
-            caminho=request.get_full_path()
-            print(caminho)
-            if '?' not in caminho:
-                print("zerou")
-                i=0
-            else:
-                i=int(caminho.split('=')[1])
-            i = i + 1
-            context = {'i':i}
-            print(i)
-            if i < 3:
+            context = {'i':count}
+            print(count)
+            if count < 3:
                 messages.success(request, 'Usuário ou senha inválidas.')
                 parameters = urlencode(context)
                 return redirect(f'../login/auth?{parameters}')
@@ -156,6 +154,7 @@ def monitoraVoos(request):
     
     else:
         form = Formulario_Cadastro_Voo(request.POST)
+        print("chegou aqui")
         if form.is_valid():
             print (form.cleaned_data)
             
