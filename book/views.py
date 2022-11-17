@@ -138,8 +138,8 @@ def monitoraVoos(request):
             print (form.cleaned_data)
             
             codigo = form.cleaned_data['código_do_voo']
-            verifica_codigo = Voo.objects.filter(codigo_voo=codigo).first()
-           
+            verifica_codigo = Voo.objects.filter(codigo_voo=codigo).exists()
+            print(verifica_codigo)
             if verifica_codigo:                 ##IF que deleta se código está na basa de dados
                 deleta_voo(codigo)
                 print("Deletou")
