@@ -84,8 +84,8 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo" onclick="redirectRelatorio()">
-                    <span>Relatórios</span>
+                    aria-expanded="true" aria-controls="collapseTwo" onclick="redirectMonitora()">
+                    <span>Monitora Voos</span>
                 </a>
             </li>
 
@@ -206,10 +206,17 @@
                         <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i>Gerar Relatório</a> -->
                     </div>
-                        <input type="radio" id="html" name="tipo_relatorio" value="partida">
+                        <!-- <input type="radio" id="html" name="tipo_relatorio" value="partida">
                         <label for="html">Relatório de Partida</label><br>
                         <input type="radio" id="css" name="tipo_relatorio" value="chegada">
-                        <label for="css">Relatório de Chegada</label><br>
+                        <label for="css">Relatório de Chegada</label><br> -->
+                        <form method = "post">
+                            {% csrf_token %}
+    
+                            {{ form }}
+                         
+                            <input type="submit" value="Gerar Relatório">
+                        </form>
                     <!-- Content Row -->
                     <div class="row">
                         

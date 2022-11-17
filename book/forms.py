@@ -11,7 +11,6 @@ class Formulario_Cadastro_Voo(forms.Form):
 class Codigo_Voo_Monitora(forms.Form):
     codigo_voo = forms.IntegerField(min_value=0)
 
-class DateTimeField_ERelatorio:
-    #TODO: Inspirar-se na parte do Igor e criar um forms com DateTIMEField para receber dos relatórios
-    #Opcional: Colocar o RadialButton com tipo de relatório implementado neste forms
-    pass
+class DateTimeField_ERelatorio(forms.Form):
+    data_inicio = forms.DateTimeField(error_messages={'invalid': "Esta data é inválida!"})
+    data_fim = forms.DateTimeField(error_messages={'invalid': "Esta data é inválida!"})

@@ -198,7 +198,7 @@
                             {% csrf_token %}
     
                             {{ form.as_p }}
-
+                            <div class="errorMessage">
                             {% if messages %}
                         
                                     {% for message in messages %}
@@ -206,6 +206,7 @@
                                     {% endfor %}
                                 
                             {% endif %}
+                            </div>
 
                             <br>
                          

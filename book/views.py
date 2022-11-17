@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import FileResponse
 from django.shortcuts import render
 from book.class_GeradorRelatorio import GeradorRelatorio
-from book.forms import Codigo_Voo_Monitora, Formulario_Cadastro_Voo
+from book.forms import Codigo_Voo_Monitora, DateTimeField_ERelatorio, Formulario_Cadastro_Voo
 from book.models import Voo
 from django.http.response import HttpResponse
 from django.contrib.auth import authenticate, login
@@ -25,13 +25,20 @@ def login(request):
             login(request, user)
             return HttpResponse('Autenticado')
         else:
+            caminho=request.get_full_path()
+            print(caminho)
+            if '?' not in caminho:
+                print("zerou")
+                i=0
+            else:
+                i=int(caminho.split('=')[1])
             i = i + 1
             context = {'i':i}
             print(i)
             if i < 3:
                 messages.success(request, 'Usuário ou senha inválidas.')
                 parameters = urlencode(context)
-                return redirect(f'login?{parameters}')
+                return redirect(f'../login/auth?{parameters}')
             else:
                 messages.success(request, 'Usuário ou senha inválidas.')
                 return render(request, "login_fail.html")
@@ -86,7 +93,22 @@ def cadastroVoos(request):
 
 def relatorios(request):
     # Simplesmente renderização, quem manipula a criação do relatório é o html relatorios.html, na function downloadRelatorio()
-    return render(request, "relatorios.html")
+    if request.method == "GET":
+        form = DateTimeField_ERelatorio()
+        context = {
+            'form' : form
+        }
+        return render(request, "relatorios.html",context)
+
+        
+    else:
+        form = DateTimeField_ERelatorio(request.POST)
+        if form.is_valid():
+            print (form.cleaned_data)    
+        context = {
+            'form' : form
+        }
+        return render(request, "relatorios.html",context)
 
 def escolheVooMonitorado(request):
     # Receptor dos dados usados em `monitoraVoos()`
@@ -209,8 +231,7 @@ def mostra_chegada_real(codigo_voo):
 
 
 def retornaRelatorioPDF(request):
-    #buffer = io.BytesIO()
-    #buffer.seek(0)          #Linhas inúteis
+    
     
     relatorio = GeradorRelatorio(None, None, None) #GeradorRelatorio(tipo, inicio, fim)
     #                 tipo é um boolean (0 para Partidas e 1 para Chegadas)

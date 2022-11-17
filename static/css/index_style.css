@@ -3,7 +3,7 @@
 * {
 	box-sizing: border-box;
 	margin: 0;
-	padding: 0;	
+	padding: 6px;
 	font-family: Raleway, sans-serif;
 }
 
@@ -31,7 +31,9 @@ body {
 	position: relative;	
 	height: 100%;
 }
-
+.success{
+	color: rgb(143, 6, 6);
+}
 .screen__background {		
 	position: absolute;
 	top: 0;

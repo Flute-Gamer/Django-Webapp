@@ -19,7 +19,7 @@ from book import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login' , views.login),
+    path('login/auth' , views.login,name='login'),
     path('login_fail' , views.login),
     path('inicial',views.inicial),
     path('cadastroVoos',views.cadastroVoos),
@@ -27,6 +27,5 @@ urlpatterns = [
     path('download',views.retornaRelatorioPDF),
     path('monitoraVoos',views.escolheVooMonitorado),
     path('monitoraVoos/vooEscolhido',views.monitoraVoos),
-    path('login', views.login, name = "login")
     #path('erros',views.errors) #Faz muito sentido colocar páginas de erro com o erro passado como argumento
 ]
