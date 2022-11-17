@@ -27,6 +27,6 @@ urlpatterns = [
     path('download',views.retornaRelatorioPDF),
     path('monitoraVoos',views.escolheVooMonitorado),
     path('monitoraVoos/vooEscolhido',views.monitoraVoos),
-    path('login/', views.login, name = "login")
+    path('login', views.login, name = "login")
     #path('erros',views.errors) #Faz muito sentido colocar páginas de erro com o erro passado como argumento
 ]

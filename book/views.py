@@ -21,16 +21,17 @@ def login(request):
         senha = request.POST.get('senha')
 
         user = authenticate(usuario=usuario, senha=senha)
-
         if user:
             login(request, user)
             return HttpResponse('Autenticado')
         else:
             i = i + 1
+            context = {'i':i}
             print(i)
             if i < 3:
                 messages.success(request, 'Usuário ou senha inválidas.')
-                return render(request, "login.html")
+                parameters = urlencode(context)
+                return redirect(f'login?{parameters}')
             else:
                 messages.success(request, 'Usuário ou senha inválidas.')
                 return render(request, "login_fail.html")
@@ -108,18 +109,19 @@ def escolheVooMonitorado(request):
         return redirect(f'monitoraVoos/vooEscolhido?{parameters}')
 
 def monitoraVoos(request):
-    print(request.body)
-    body_unicode = request.body.decode('utf-8') #Problema decodificando
-    body = json.loads(body_unicode)
+    print(request.get_full_path())
+    codigo_voo=request.get_full_path()
+    codigo_voo=codigo_voo.split('=')[1]
+    print(codigo_voo)
     context = {
-        'voo_mostrado': mostra_codigo_do_voo(5),
-        'status_mostrado': mostra_status_do_voo(5),
-        'destino_mostrado': mostra_aeroporto_destino(5),
-        'partida_mostrada': mostra_aeroporto_partida(5),
-        'partida_prevista' : mostra_partida_prevista(5),
-        'partida_real' : mostra_partida_real(5),
-        'chegada_prevista' : mostra_chegada_prevista(5),
-        'chegada_real' : mostra_chegada_real(5)
+        'voo_mostrado': mostra_codigo_do_voo(codigo_voo),
+        'status_mostrado': mostra_status_do_voo(codigo_voo),
+        'destino_mostrado': mostra_aeroporto_destino(codigo_voo),
+        'partida_mostrada': mostra_aeroporto_partida(codigo_voo),
+        'partida_prevista' : mostra_partida_prevista(codigo_voo),
+        'partida_real' : mostra_partida_real(codigo_voo),
+        'chegada_prevista' : mostra_chegada_prevista(codigo_voo),
+        'chegada_real' : mostra_chegada_real(codigo_voo)
     }
     return render(request, "monitoraVoos.html", context)
 
