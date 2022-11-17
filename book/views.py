@@ -105,8 +105,12 @@ def escolheVooMonitorado(request):
         context = {
             'form' : form
         }
-        parameters = urlencode(form.cleaned_data)
-        return redirect(f'monitoraVoos/vooEscolhido?{parameters}')
+        if Voo.objects.filter(codigo_de_voo=form.cleaned_data['codigo_voo']).exists():
+            parameters = urlencode(form.cleaned_data)
+            return redirect(f'monitoraVoos/vooEscolhido?{parameters}')
+        else:
+            messages.success(request, 'Código de Voo inexistente.')
+            return render(request, "escolheVoo.html",context)
 
 def monitoraVoos(request):
     print(request.get_full_path())
