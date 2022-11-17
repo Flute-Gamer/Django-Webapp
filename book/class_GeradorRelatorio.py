@@ -66,13 +66,14 @@ class GeradorRelatorio:
             pdf.cell(2*campoData, altura, 'Partida', 1, 1, 'C')
         else:
             pdf.cell(2*campoData, altura, 'Chegada', 1, 1, 'C')
-            
+
         pdf.set_x(campoAeroporto+campoID+10)
         pdf.cell(campoData, altura, 'Prevista', 1, 1, 'C')
         pdf.ln(-altura)
         pdf.set_x(campoID +campoAeroporto +campoData +10)
         pdf.cell(campoData, altura, 'Real', 1, 1, 'C')
-        for voo in self.registros:
+        
+        for voo in self.registros: #Linhas da tabela
             
             pdf.cell(campoID, altura, str(voo.codigo_de_voo), 1, 1, 'C')   
             pdf.ln(-altura)
@@ -83,18 +84,33 @@ class GeradorRelatorio:
                 pdf.ln(-altura)
                 pdf.set_x(campoAeroporto+campoID+10)
                 pdf.cell(campoData, altura, str((voo.partida_prevista).strftime('%Y/%m/%d-%H:%M')), 1, 1, 'C')
+                
+                pdf.ln(-altura)
+                pdf.set_x(campoAeroporto+campoID+campoData+10)
+                if(voo.partida_real != None):                    
+                    pdf.cell(campoData, altura, str((voo.partida_real).strftime('%Y/%m/%d-%H:%M')), 1, 1, 'C')
+                else:
+                    pdf.cell(campoData, altura, 'Não partiu', 1, 1, 'C')
+
             else:
                 pdf.cell(campoAeroporto, altura, voo.aeroporto_destino, 1, 1, 'C')
                 pdf.ln(-altura)
                 pdf.set_x(campoAeroporto+campoID+10)
                 pdf.cell(campoData, altura, str((voo.chegada_prevista).strftime('%Y/%m/%d-%H:%M')), 1, 1, 'C')
+                
+                pdf.ln(-altura)
+                pdf.set_x(campoAeroporto+campoID+campoData+10)
+                if(voo.chegada_real != None):
+                    pdf.cell(campoData, altura, str((voo.chegada_real).strftime('%Y/%m/%d-%H:%M')), 1, 1, 'C')
+                else:
+                    pdf.cell(campoData, altura, 'Não chegou', 1, 1, 'C')
 
         #Assinatura, título, autor e etc. 
         pdf.ln(10)
         pdf.set_x(0)
         pdf.cell(210, 4, 'Relatório realizado em '+datetime.datetime.now().strftime('%Y/%m/%d-%H:%M:%S'), 0, 1, 'C') #TODO:Atualizar para GMT-3
-        pdf.set_title('Relatório Administrativo do Aeroporto de Vira-Canecos')
-        pdf.set_author('Sistema de Monitoração de Voos')
+        pdf.set_title('Relatório Administrativo')
+        pdf.set_author('Sistema de Monitoração de Voos do Grupo 5')
         pdf.output(name=nome, dest='F').encode('latin-1')
         pdf.close()
         
