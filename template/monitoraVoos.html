@@ -199,7 +199,7 @@
 
                         Caso deseje deletar algum voo, digite o código do voo abaixo: <br>
                         <br>
-                        <form action="{% url 'monitoraVoos/' %}" method = "POST">{% csrf_token %}
+                        <form action="../monitoraVoos" method = "POST">{% csrf_token %}
                             {% csrf_token %}
     
                             {{ form.as_p }}
