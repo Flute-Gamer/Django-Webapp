@@ -16,6 +16,7 @@ class Formulario_Atualiza_Voos(forms.Form):
     chegada_prevista = forms.DateField(error_messages={'invalid': "Esta data é inválida!"}, required = False)
     partida_real = forms.DateField(error_messages={'invalid': "Esta data é inválida!"}, required = False)
     chegada_real = forms.DateField(error_messages={'invalid': "Esta data é inválida!"}, required = False)
+    status = forms.IntegerField(min_value=1,required=False)
 
 class Codigo_Voo_Monitora(forms.Form):
     codigo_voo = forms.IntegerField(min_value=0,required=False)

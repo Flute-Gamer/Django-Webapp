@@ -20,12 +20,36 @@ def login(request):
     if request.method == 'GET':
         usuario_check = User.objects.filter(username="Igor").exists()
         if usuario_check == False:
-                print("criei o buseto")
                 user_criar = "Igor"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
+        usuario_check = User.objects.filter(username="Piloto").exists()
+        if usuario_check == False:
+                user_criar = "Piloto"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
+        usuario_check = User.objects.filter(username="Torre").exists()
+        if usuario_check == False:
+                user_criar = "Torre"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
+        usuario_check = User.objects.filter(username="Funcionário").exists()
+        if usuario_check == False:
+                user_criar = "Funcionário"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
+        usuario_check = User.objects.filter(username="Companhia").exists()
+        if usuario_check == False:
+                user_criar = "Companhia"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
         return render(request, "login.html")
+
     else:
         if "load_count" in request.session:
             count = request.session["load_count"] + 1
@@ -303,7 +327,13 @@ def atualizaVoos(request):
             partida_prev = form.cleaned_data['partida_prevista'] 
             chegada_prev = form.cleaned_data['chegada_prevista'] 
             partida_r = form.cleaned_data['partida_real'] 
-            chegada_r = form.cleaned_data['chegada_real'] 
+            chegada_r = form.cleaned_data['chegada_real']
+            status = form.cleaned_data['status']
+            if  status is not None:
+                if voo.status < status:
+                    voo.status = status
+                else:
+                   messages.success(request, 'Não é retornar a um status anterior ao atual') 
             if (destino is not None):
                 voo.aeroporto_destino = destino
                 voo.save()

@@ -199,28 +199,31 @@
                                 class="fas fa-download fa-sm text-white-50"></i>Atualizar</a>
                                 <!-- <button></button> -->
                     </div>
+
+                    <form method = "POST">
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+
+                        <input type="submit" value="Deletar">
+                        <input type="submit" value="Próximo Status" name="proximo">
+
+
+                        <br>
+
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                        <br>
+
+                    </form>
+
                         {{voo_mostrado}} <br> {{status_mostrado}} <br> {{partida_mostrada}} <br> {{destino_mostrado}} <br>
                         {{partida_prevista}} <br> {{partida_real}} <br> {{chegada_prevista}} <br> {{chegada_real}} <br> <br>
 
                         Caso deseje deletar algum voo, digite o código do voo abaixo: <br>
                         <br>
-                        <form method = "POST">
-                            {% csrf_token %}
-    
-                            {{ form.as_p }}
-
-                            <input type="submit" value="Deletar">
-                            <input type="submit" value="Próximo Status" name="proximo">
-
-
-                            <br>
-
-                            {% for message in messages %}
-                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                            {% endfor %}
-                            <br>
-
-                        </form>
+                    
 
                     <!-- Content Row -->
                     <div class="row">
