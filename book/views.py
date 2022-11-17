@@ -18,15 +18,15 @@ from django.contrib.auth import login as login_django
 
 def login(request):
     if request.method == 'GET':
-        usuario_check = User.objects.filter(username="Igor").exists()
+        usuario_check = User.objects.filter(username="ICara_Crud").exists()
         if usuario_check == False:
-                user_criar = "Igor"
+                user_criar = "Cara_Crud"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
-        usuario_check = User.objects.filter(username="Piloto").exists()
+        usuario_check = User.objects.filter(username="Cara_Relatorio").exists()
         if usuario_check == False:
-                user_criar = "Piloto"
+                user_criar = "Cara_Relatorio"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
@@ -339,10 +339,10 @@ def atualizaVoos(request):
                     voo.save()
                 else:
                    messages.success(request, 'Não é retornar a um status anterior ao atual') 
-            if (destino is not None):
+            if (destino is not ''):
                 voo.aeroporto_destino = destino
                 voo.save()
-            if (origem is not None):
+            if (origem is not ''):
                 voo.aeroporto_partida = origem
                 voo.save()
             ### Partida e Chegada Previstas
