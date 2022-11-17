@@ -20,12 +20,36 @@ def login(request):
     if request.method == 'GET':
         usuario_check = User.objects.filter(username="Igor").exists()
         if usuario_check == False:
-                print("criei o buseto")
                 user_criar = "Igor"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
+        usuario_check = User.objects.filter(username="Piloto").exists()
+        if usuario_check == False:
+                user_criar = "Piloto"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
+        usuario_check = User.objects.filter(username="Torre").exists()
+        if usuario_check == False:
+                user_criar = "Torre"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
+        usuario_check = User.objects.filter(username="Funcionário").exists()
+        if usuario_check == False:
+                user_criar = "Funcionário"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
+        usuario_check = User.objects.filter(username="Companhia").exists()
+        if usuario_check == False:
+                user_criar = "Companhia"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
         return render(request, "login.html")
+
     else:
         if "load_count" in request.session:
             count = request.session["load_count"] + 1
