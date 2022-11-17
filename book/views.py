@@ -155,6 +155,7 @@ def monitoraVoos(request):
         return render(request, "monitoraVoos.html", context)
     
     else:
+        print("entrou no else")
         form = Formulario_Cadastro_Voo(request.POST)
         if form.is_valid():
             print (form.cleaned_data)
