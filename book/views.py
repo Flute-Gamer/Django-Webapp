@@ -25,7 +25,7 @@ def login(request):
             login(request, user)
             return HttpResponse('Autenticado')
         else:
-            i = i + 1
+            i = 2
             context = {'i':i}
             print(i)
             if i < 3:
@@ -132,13 +132,14 @@ def monitoraVoos(request):
         form = Formulario_Cadastro_Voo(request.POST)
         if form.is_valid():
             print (form.cleaned_data)
-            
-            codigo = form.cleaned_data['código_do_voo']
+            print("passou 1")
+            codigo = form.cleaned_data['codigo_voo']
             verifica_codigo = Voo.objects.filter(codigo_voo=codigo).first()
            
             if verifica_codigo:                 ##IF que deleta se código está na basa de dados
                 deleta_voo(codigo)
                 print("Deletou")
+                print("passou 2")
                 messages.success(request, 'Voo deletado com sucesso.')
                 context = {
                     'form' : form
@@ -146,6 +147,7 @@ def monitoraVoos(request):
                 return render(request, "monitoraVoos.html", context)
             
             else:
+                print("passou")
                 messages.success(request, 'Voo não encontrado na nossa base de dados.')
                 context = {
                         'form' : form
@@ -162,6 +164,7 @@ def deleta_voo(codigo_voo):
     voo.aeroporto_destino.delete()
     voo.status.delete()
     voo.codigo_de_voo.delte()
+    return
 
 def mostra_codigo_do_voo(codigo_voo):
     voo = Voo.objects.get(codigo_de_voo=codigo_voo)

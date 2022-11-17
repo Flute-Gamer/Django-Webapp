@@ -200,18 +200,21 @@
 
                         Caso deseje deletar algum voo, digite o código do voo abaixo: <br>
                         <br>
-                        {% csrf_token %}
+                        <form action="{% url 'login' %}" method = "POST">{% csrf_token %}
+                            {% csrf_token %}
     
-                        {{ form.as_p }}
+                            {{ form.as_p }}
 
-                        <input type="submit" value="Deletar">
+                            <input type="submit" value="Deletar">
 
-                        <br>
+                            <br>
 
-                        {% for message in messages %}
-                                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                        {% endfor %}
-                        <br>
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                            <br>
+
+                        </form>
 
                     <!-- Content Row -->
                     <div class="row">
