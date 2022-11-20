@@ -194,7 +194,7 @@
                         <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  href="../../atualizaVoos"><i
                             class="fas fa-download fa-sm text-white-50"></i>Atualizar</a>
                         </div>
-                        <p>Escolha o voo que você quer monitorar:</p>
+                        <p>Escolha o voo que você quer monitorar com mais detalhes:</p>
                         <form method = "post">
                             {% csrf_token %}
     
@@ -206,8 +206,15 @@
                             {% for message in messages %}
                                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                             {% endfor %}
-                    
-                        {% endif %}
+                            {% endif %}
+                            <br><br>
+                            Códigos de Voos:
+                            <br>
+                            <br>
+                            {% for c in codigo_de_voo %}
+                                <li> {{ c }} </li>
+                            {% endfor %}
+               
                         </form>
 
                     <!-- Content Row -->
