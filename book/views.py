@@ -9,6 +9,7 @@ from django.shortcuts import render
 from book.class_GeradorRelatorio import GeradorRelatorio
 from book.forms import Codigo_Voo_Monitora, DateTimeField_ERelatorio, Formulario_Cadastro_Voo, Formulario_Atualiza_Voos
 from book.models import Voo
+from book.enum_Status import enum_Status
 from django.http.response import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -167,24 +168,12 @@ def relatorios(request):
 def escolheVooMonitorado(request):
     # Receptor dos dados usados em `monitoraVoos()`
     if request.method == "GET":
-        todos_voos = Voo.objects.all()
+        todos_voos = Voo.objects.all().values()
         print(todos_voos)
         form = Codigo_Voo_Monitora()
-        codigos = []
-        statuss = []
-        aeroportopart = []
-        aeroportocheg = []
-        for voo in todos_voos.iterator():
-            codigos.append(voo.codigo_de_voo)
-            statuss.append(voo.status)
-            aeroportopart.append(voo.aeroporto_partida)
-            aeroportocheg.append(voo.aeroporto_destino)
+        todos_voos=associaStatus(todos_voos)
         context = {
-            'codigo_de_voo':codigos,
-            'status':statuss,
-            'aeroportopart':aeroportopart,
-            'aeroportocheg':aeroportocheg,
-            'form' : form
+            'voos':todos_voos
         }
         print(context)
         return render(request, "escolheVoo.html",context)
@@ -442,3 +431,10 @@ def atualizaVoos(request):
             }
             return render(request, "atualizaVoos.html", context)
 
+def associaStatus(voos):
+    for voo in voos:
+            aux = str(enum_Status(voo['status']))
+            if('_' in aux):
+                aux.replace('_',' ')
+            voo['status']=aux[12:]
+    return voos

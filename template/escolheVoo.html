@@ -20,7 +20,23 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
-
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
     <script type="text/javascript">
         function redirectRelatorio(){
             window.location.assign("relatorios");
@@ -208,12 +224,28 @@
                             {% endfor %}
                             {% endif %}
                             <br><br>
-                            Códigos de Voos:
+                            <table>
+                                <tr>
+                                    <th>Código de Voo</th>
+                                    <th>Origem</th>
+                                    <th>Destino</th>
+                                    <th>Status</th>
+                                </tr>
+                                {% if voos %}
+                                {% for voo in voos %}
+                                <tr>
+                                    <td> {{ voo.codigo_de_voo }} </td>
+                                    <td> {{ voo.aeroporto_partida }}</td>
+                                    <td> {{ voo.aeroporto_destino }}</td>
+                                    <td> {{ voo.status }} </td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <li>Não há Voos cadastrados!</li>
+                                {% endif %}
+                            </table>
                             <br>
                             <br>
-                            {% for c in codigo_de_voo %}
-                                <li> {{ c }} </li>
-                            {% endfor %}
                
                         </form>
 
