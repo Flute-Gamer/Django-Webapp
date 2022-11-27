@@ -215,14 +215,10 @@
                             {% csrf_token %}
     
                             {{ form }}
+                            
                          
                             <input type="submit" value="Enviar">
-                            {% if messages %}
-                        
-                            {% for message in messages %}
-                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                            {% endfor %}
-                            {% endif %}
+                            
                             <br><br>
                             <table>
                                 <tr>

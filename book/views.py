@@ -173,6 +173,7 @@ def escolheVooMonitorado(request):
         form = Codigo_Voo_Monitora()
         todos_voos=associaStatus(todos_voos)
         context = {
+            'form' : form,
             'voos':todos_voos
         }
         print(context)
@@ -215,7 +216,6 @@ def monitoraVoos(request):
     
     else:
         form = Codigo_Voo_Monitora(request.POST)
-        print("chegou aqui")
         print(type(form))
         if form.is_valid():
             print (form.cleaned_data)

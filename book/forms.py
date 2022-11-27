@@ -20,7 +20,7 @@ class Formulario_Atualiza_Voos(forms.Form):
 
 class Codigo_Voo_Monitora(forms.Form):
     codigo_voo = forms.IntegerField(min_value=0,required=False)
-    proximo = forms.CheckboxInput()
+
 
 class DateTimeField_ERelatorio(forms.Form):
     CHOICES=[('partida','Relatório de Partida'),
