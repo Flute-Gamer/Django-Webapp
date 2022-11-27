@@ -167,10 +167,26 @@ def relatorios(request):
 def escolheVooMonitorado(request):
     # Receptor dos dados usados em `monitoraVoos()`
     if request.method == "GET":
+        todos_voos = Voo.objects.all()
+        print(todos_voos)
         form = Codigo_Voo_Monitora()
+        codigos = []
+        statuss = []
+        aeroportopart = []
+        aeroportocheg = []
+        for voo in todos_voos.iterator():
+            codigos.append(voo.codigo_de_voo)
+            statuss.append(voo.status)
+            aeroportopart.append(voo.aeroporto_partida)
+            aeroportocheg.append(voo.aeroporto_destino)
         context = {
+            'codigo_de_voo':codigos,
+            'status':statuss,
+            'aeroportopart':aeroportopart,
+            'aeroportocheg':aeroportocheg,
             'form' : form
         }
+        print(context)
         return render(request, "escolheVoo.html",context)
 
         
@@ -338,7 +354,11 @@ def atualizaVoos(request):
                     voo.status = status
                     voo.save()
                 else:
-                   messages.success(request, 'Não é retornar a um status anterior ao atual') 
+                    messages.success(request, 'Não é possível retornar a um status anterior ao atual') 
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
             if (destino is not ''):
                 voo.aeroporto_destino = destino
                 voo.save()
@@ -380,7 +400,7 @@ def atualizaVoos(request):
             
 ### Partida e Chegada Real
 
-        if (partida_r and chegada_r is not None):
+            if (partida_r and chegada_r is not None):
                 if (partida_r> chegada_r):  ## If não permite que voo possua chegada anterior a destino
                     messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
                     context = {
@@ -390,35 +410,35 @@ def atualizaVoos(request):
                 voo.partida_real = partida_r
                 voo.chegada_real = chegada_r
                 voo.save()
-        if (partida_r is not None and chegada_r is None):
-            if (voo.chegada_real is not None):
-                if (partida_r > voo.chegada_real):
-                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
-                    context = {
+            if (partida_r is not None and chegada_r is None):
+                if (voo.chegada_real is not None):
+                    if (partida_r > voo.chegada_real):
+                        messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                        context = {
                         'form' : form
                     }
                     return render(request, "atualizaVoos.html", context)
             voo.partida_real = partida_r
             voo.save()
 
-        if (chegada_r is not None and partida_r is None):
-            if (voo.partida_real is not None):
-                if (voo.partida_real > chegada_r):
-                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
-                    context = {
-                        'form' : form
-                    }
+            if (chegada_r is not None and partida_r is None):
+                if (voo.partida_real is not None):
+                    if (voo.partida_real > chegada_r):
+                        messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                        context = {
+                            'form' : form
+                    }   
                     return render(request, "atualizaVoos.html", context)
-            voo.partida_real = partida_r
-            voo.save()
+                voo.partida_real = partida_r
+                voo.save()
 
             
 
                 #Refresh
                 #Error msg
-        messages.success(request, 'Atualizações alteradas com sucesso.')
-        context = {
-            'form' : form
-        }
-        return render(request, "atualizaVoos.html", context)
+            messages.success(request, 'Atualizações alteradas com sucesso.')
+            context = {
+                'form' : form
+            }
+            return render(request, "atualizaVoos.html", context)
 

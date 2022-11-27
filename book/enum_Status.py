@@ -1,5 +1,5 @@
 from enum import Enum
-#para importar use from "enum_Status import enum_Status"
+#para importar use from "from enum_Status import enum_Status"
 # escrevendo "enum_Status(2)" deve retornar "Programado"
 # escrever o nome retorna o numero
 #Tratar como objeto
