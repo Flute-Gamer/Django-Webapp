@@ -49,6 +49,12 @@ def login(request):
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
+        usuario_check = User.objects.filter(username="Gerente_Testes").exists()
+        if usuario_check == False:
+                user_criar = "Gerente_Testes"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
         return render(request, "login.html")
 
     else:
