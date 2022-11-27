@@ -71,7 +71,7 @@
             <div class="sidebar-heading">
                 Interface
             </div>
-            {% if usuario == 'Cara_Relatorio' %}
+            {% if usuario == 'Cara_Relatorio' and usuario == 'Companhia' %}
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo" onclick="redirectRelatorio()">
@@ -90,7 +90,7 @@
             </li>
             {% endif %}
 
-            {% if usuario == 'Funcionario' %}
+            {% if usuario == 'Funcionário' %}
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities" onclick="redirectCadastra()">

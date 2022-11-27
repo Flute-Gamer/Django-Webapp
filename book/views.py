@@ -18,7 +18,7 @@ from django.contrib.auth import login as login_django
 
 def login(request):
     if request.method == 'GET':
-        usuario_check = User.objects.filter(username="ICara_Crud").exists()
+        usuario_check = User.objects.filter(username="Cara_Relatorio").exists()
         if usuario_check == False:
                 user_criar = "Cara_Crud"
                 senha_criar= "1234"
