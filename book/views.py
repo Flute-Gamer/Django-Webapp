@@ -84,6 +84,9 @@ def login(request):
                 messages.success(request, 'Usuário ou senha inválidas.')
                 return render(request, "login_fail.html")
 
+def logout(request):
+    request.session["logged_user"]=""
+    return render(request,"login.html")
 
 def inicial(request):
     usuario = request.session["logged_user"]

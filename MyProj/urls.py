@@ -29,5 +29,6 @@ urlpatterns = [
     path('monitoraVoos/vooEscolhido',views.monitoraVoos),
     path('monitoraVoos',views.monitoraVoos),
     path('atualizaVoos', views.atualizaVoos),
+    path('logout',views.logout)
     #path('erros',views.errors) #Faz muito sentido colocar páginas de erro com o erro passado como argumento
 ]
