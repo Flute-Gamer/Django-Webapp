@@ -22,7 +22,7 @@ class Formulario_Atualiza_Voos(forms.Form):
         (9,'Arquivado')
     )
     código_do_voo = forms.IntegerField(min_value=0)
-    companhia_aerea = forms.CharField()
+    companhia_aerea = forms.CharField(required = False)
     destino_do_voo = forms.CharField(required = False)
     origem_do_voo = forms.CharField(required = False)
     partida_prevista = forms.DateTimeField(error_messages={'invalid': "Esta data é inválida!"}, required = False)
@@ -33,7 +33,7 @@ class Formulario_Atualiza_Voos(forms.Form):
 
 class Formulario_Atualiza_Basico_Voos(forms.Form):
     código_do_voo = forms.IntegerField(min_value=0)
-    companhia_aerea = forms.CharField()
+    companhia_aerea = forms.CharField(required = False)
     destino_do_voo = forms.CharField(required = False)
     origem_do_voo = forms.CharField(required = False)
     partida_prevista = forms.DateTimeField(error_messages={'invalid': "Esta data é inválida!"}, required = False)

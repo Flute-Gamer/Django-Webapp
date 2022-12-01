@@ -229,7 +229,7 @@ def monitoraVoos(request):
         print(codigo_voo)
         context = {
             'voo_mostrado': mostra_codigo_do_voo(codigo_voo),
-            'campanhia_mostrada' : mostra_companhia(codigo_voo),
+            'companhia_mostrada' : mostra_companhia(codigo_voo),
             'status_mostrado': mostra_status_do_voo(codigo_voo),
             'destino_mostrado': mostra_aeroporto_destino(codigo_voo),
             'partida_mostrada': mostra_aeroporto_partida(codigo_voo),
@@ -488,6 +488,7 @@ def atualizaVoos(request):
             voo = Voo.objects.get(codigo_de_voo=codigo)
             destino = form.cleaned_data['destino_do_voo']
             origem = form.cleaned_data['origem_do_voo'] 
+            companhia_aerea = form.cleaned_data['companhia_aerea']
             partida_prev = form.cleaned_data['partida_prevista'] 
             chegada_prev = form.cleaned_data['chegada_prevista'] 
             partida_r = form.cleaned_data['partida_real'] 
@@ -510,6 +511,9 @@ def atualizaVoos(request):
                         'form' : form
                     }
                     return render(request, "atualizaVoos.html", context)
+            if (companhia_aerea is not ''):
+                voo.companhia_aerea = companhia_aerea
+                voo.save()
             if (destino is not ''):
                 voo.aeroporto_destino = destino
                 voo.save()
