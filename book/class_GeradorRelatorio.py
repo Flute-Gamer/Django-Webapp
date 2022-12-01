@@ -23,13 +23,14 @@ class GeradorRelatorio:
         self.registros.clear()
         for i in voar.iterator():
             self.registros.append(i)
-        # self.registros.append(voar)
-        #Ok, esse é o resultado esperado:
-        #"       Relatório Administrativo de Chegadas
-        #Congonhas-SP                               None
-        #Congonhas-SP                               None"
-        #Não importa quantas vezes vc atualize o relatório
-        
+
+    def valida(self):
+        if len(self.registros) <= 0:
+            print("-------------------Não há relatório para gerar------------------")
+            return False
+        else:
+            return True
+
     def gera_pdf(self):
         campoID = 20
         altura = 8
