@@ -582,8 +582,8 @@ def atualizaVoos(request):
                         messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
                         context = {
                         'form' : form
-                    }
-                    return render(request, "atualizaVoos.html", context)
+                        }
+                        return render(request, "atualizaVoos.html", context)
             voo.partida_real = partida_r
             voo.save()
 
@@ -593,8 +593,8 @@ def atualizaVoos(request):
                         messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
                         context = {
                             'form' : form
-                    }   
-                    return render(request, "atualizaVoos.html", context)
+                        }   
+                        return render(request, "atualizaVoos.html", context)
                 voo.chegada_real = chegada_r
                 voo.save()
 
