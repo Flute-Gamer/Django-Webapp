@@ -476,7 +476,8 @@ def atualizaVoos(request):
             partida_r = form.cleaned_data['partida_real'] 
             chegada_r = form.cleaned_data['chegada_real']
             status = int(form.cleaned_data['status'])
-            if  status is not None:
+            if status != 1:
+                print("Status a cadastrar: " + str(status))
                 if voo.status < status:
                     voo.status = status
                     voo.save()
