@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import FileResponse
 from django.shortcuts import render
 from book.class_GeradorRelatorio import GeradorRelatorio
-from book.forms import Codigo_Voo_Monitora, DateTimeField_ERelatorio, Formulario_Cadastro_Voo, Formulario_Atualiza_Voos
+from book.forms import Codigo_Voo_Monitora, DateTimeField_ERelatorio, Formulario_Atualiza_Basico_Voos, Formulario_Cadastro_Voo, Formulario_Atualiza_Voos
 from book.models import Voo
 from book.enum_Status import enum_Status
 from django.http.response import HttpResponse
@@ -335,6 +335,69 @@ def retornaRelatorioPDF(request):
         
         arquivo = relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
         return FileResponse(open(arquivo,'rb'))
+
+def atualizaBasico(request):
+    if request.method == "GET":
+        form = Formulario_Atualiza_Basico_Voos()
+        context = {
+            'form' : form
+        }
+        return render(request, "atualizaVoos.html", context)
+        
+    else:
+        form = Formulario_Atualiza_Basico_Voos(request.POST)
+        if form.is_valid():
+            print (form.cleaned_data)
+            codigo = form.cleaned_data['código_do_voo']
+            verifica_codigo = Voo.objects.filter(codigo_de_voo=codigo).first()
+           
+            if verifica_codigo is None:                 ##IF que nao deixa criar dois voos com mesmo código
+                messages.success(request, 'Não existe voo para ser atualizado')
+                context = {
+                    'form' : form
+                 }
+                return render(request, "atualizaVoos.html", context)
+            voo = Voo.objects.get(codigo_de_voo=codigo)
+            destino = form.cleaned_data['destino_do_voo']
+            origem = form.cleaned_data['origem_do_voo'] 
+            partida_prev = form.cleaned_data['partida_prevista'] 
+            chegada_prev = form.cleaned_data['chegada_prevista']
+            if (destino is not ''):
+                voo.aeroporto_destino = destino
+                voo.save()
+            if (origem is not ''):
+                voo.aeroporto_partida = origem
+                voo.save()
+            ### Partida e Chegada Previstas
+            if (partida_prev and chegada_prev is not None):
+                if (partida_prev > chegada_prev):  ## If não permite que voo possua chegada anterior a destino
+                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
+                voo.partida_prevista = partida_prev
+                voo.chegada_prevista = chegada_prev
+                voo.save()
+            if (partida_prev is not None and chegada_prev is None):
+                if (partida_prev > voo.chegada_prevista):
+                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
+                voo.partida_prevista = partida_prev
+                voo.save()
+            if (chegada_prev is not None and partida_prev is None):
+                if (voo.partida_prevista > chegada_prev):
+                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
+                voo.chegada_prevista= chegada_prev
+                voo.save()
+    return render(request,"atualizaBasico.html",context)
 
 def atualizaVoos(request):
     if request.method == "GET":
