@@ -497,7 +497,13 @@ def atualizaVoos(request):
             
             if status != 1:
                 print("Status a cadastrar: " + str(status))
-                if voo.status < status and status - voo.status == 1:
+                if voo.status < status and status - voo.status == 1 and voo.status != 8:
+                    voo.status = status
+                    voo.save()
+                elif status == 8:   #Voo cancelado
+                    voo.status = status
+                    voo.save()
+                elif status == 9:   #Voo arquivado
                     voo.status = status
                     voo.save()
                 else:
