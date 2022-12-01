@@ -16,7 +16,7 @@ from django.contrib.auth import login as login_django
 
 def login(request):
     if request.method == 'GET':
-        usuario_check = User.objects.filter(username="Cara_Relatorio").exists()
+        usuario_check = User.objects.filter(username="Cara_Crud").exists()
         if usuario_check == False:
                 user_criar = "Cara_Crud"
                 senha_criar= "1234"
@@ -49,6 +49,12 @@ def login(request):
         usuario_check = User.objects.filter(username="Gerente_Testes").exists()
         if usuario_check == False:
                 user_criar = "Gerente_Testes"
+                senha_criar= "1234"
+                user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
+                user_criar.save()
+        usuario_check = User.objects.filter(username="Piloto").exists()
+        if usuario_check == False:
+                user_criar = "Piloto"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
