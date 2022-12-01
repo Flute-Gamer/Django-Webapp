@@ -588,12 +588,14 @@ def associaStatus(voos=None,status=None):
         for voo in voos:
                 aux = str(enum_Status(voo['status']))
                 if('_' in aux):
-                    aux.replace('_',' ')
+                    aux=aux.replace('_',' ')
+                print(aux[12:])
                 voo['status']=aux[12:]
         return voos 
     elif status is not None:
         aux = str(enum_Status(int(status)))
         if('_' in aux):
-            aux.replace('_',' ')
+            aux=aux.replace('_',' ')
         aux=aux[12:]
+        print(aux)
         return aux
