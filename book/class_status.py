@@ -1,3 +1,6 @@
+from self import self
+
+
 class Status:
     ##Construir Classe
     def __init__(proximo_status, status_atual):

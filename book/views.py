@@ -367,6 +367,12 @@ def atualizaVoos(request):
                 if voo.status < status:
                     voo.status = status
                     voo.save()
+                if voo.status == status:
+                    messages.success(request, 'Voo já está com este status') 
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)
                 else:
                     messages.success(request, 'Não é possível retornar a um status anterior ao atual') 
                     context = {
