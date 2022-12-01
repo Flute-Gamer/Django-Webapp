@@ -488,16 +488,22 @@ def atualizaVoos(request):
             status = int(form.cleaned_data['status'])
             if status != 1:
                 print("Status a cadastrar: " + str(status))
-                if voo.status < status:
+                if voo.status < status and status - voo.status == 1:
                     voo.status = status
                     voo.save()
+                    return render(request, "atualizaVoos.html")
+                else:
+                    messages.success(request, 'Não é possível pular um status!') 
+                    context = {
+                        'form' : form
+                    }
                 if voo.status == status:
                     messages.success(request, 'Voo está com este status') 
                     context = {
                         'form' : form
                     }
                     return render(request, "atualizaVoos.html", context)
-                else:
+                elif voo.status > status:
                     messages.success(request, 'Não é possível retornar a um status anterior ao atual') 
                     context = {
                         'form' : form
