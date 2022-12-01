@@ -1,6 +1,3 @@
-import io
-import json
-
 from urllib.parse import urlencode, unquote
 from django.shortcuts import redirect, render
 from django.contrib import messages
@@ -309,14 +306,21 @@ def retornaRelatorioPDF(request):
     dia_fim = data_fim[0].split('=')[1]
     data_inicio = dia_inicio+ ' ' + data_inicio[1]
     data_fim = dia_fim+ ' ' + data_fim[1]
-    print(data_fim)
-    relatorio = GeradorRelatorio(tipo=tipo, inicio=data_inicio, fim=data_fim) #GeradorRelatorio(tipo, inicio, fim)
-    #                 tipo é um boolean (0 para Partidas e 1 para Chegadas)
-    #                 inicio e fim sao datetimes na forma AAAA/MM/DD-HH:MM:SS 
-    #                 (Utilizar a seguinte parte da documentação: https://docs.djangoproject.com/en/4.1/ref/forms/fields/#datetimefield )
-    
-    arquivo = relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
-    return FileResponse(open(arquivo,'rb'))
+    d_fim = data_fim
+    d_inicio = data_inicio
+    if(d_inicio > d_fim):
+        messages.success(request, 'Data inicial maior que a final')
+        return render(request, "relatorios.html")
+        # relatorios(request)
+    else:
+        print(data_fim)
+        relatorio = GeradorRelatorio(tipo=tipo, inicio=data_inicio, fim=data_fim) #GeradorRelatorio(tipo, inicio, fim)
+        #                 tipo é um boolean (0 para Partidas e 1 para Chegadas)
+        #                 inicio e fim sao datetimes na forma AAAA/MM/DD-HH:MM:SS 
+        #                 (Utilizar a seguinte parte da documentação: https://docs.djangoproject.com/en/4.1/ref/forms/fields/#datetimefield )
+        
+        arquivo = relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
+        return FileResponse(open(arquivo,'rb'))
 
 def atualizaVoos(request):
     if request.method == "GET":
