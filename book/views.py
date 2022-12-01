@@ -178,7 +178,7 @@ def monitoraCadastro(request):
 
 def getVoosDict(form):
     todos_voos = Voo.objects.filter(status__range=[1,8]).values()
-    todos_voos=associaStatus(todos_voos)
+    todos_voos=associaStatus(voos=todos_voos)
     if form is not None:
         context = {
             'form' : form,
@@ -272,8 +272,9 @@ def mostra_codigo_do_voo(codigo_voo):
 
 def mostra_status_do_voo(codigo_voo):
     voo = Voo.objects.get(codigo_de_voo=codigo_voo)
-    print('Status do voo: '+ str(voo.status))
-    return ('Status do voo: '+ str(voo.status))
+    status = associaStatus(status=str(voo.status))
+    print('Status do voo: '+ status)
+    return ('Status do voo: '+ status)
 
 def mostra_aeroporto_destino(codigo_voo):
     voo = Voo.objects.get(codigo_de_voo=codigo_voo)
@@ -463,10 +464,17 @@ def atualizaVoos(request):
             }
             return render(request, "atualizaVoos.html", context)
 
-def associaStatus(voos):
-    for voo in voos:
-            aux = str(enum_Status(voo['status']))
-            if('_' in aux):
-                aux.replace('_',' ')
-            voo['status']=aux[12:]
-    return voos
+def associaStatus(voos=None,status=None):
+    if voos is not None:
+        for voo in voos:
+                aux = str(enum_Status(voo['status']))
+                if('_' in aux):
+                    aux.replace('_',' ')
+                voo['status']=aux[12:]
+        return voos 
+    elif status is not None:
+        aux = str(enum_Status(int(status)))
+        if('_' in aux):
+            aux.replace('_',' ')
+        aux=aux[12:]
+        return aux
