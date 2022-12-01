@@ -171,18 +171,30 @@ def relatorios(request):
         # return render(request, "relatorios.html",context)
         return redirect(f"download/relatorio?{params}")
 
-def escolheVooMonitorado(request):
-    # Receptor dos dados usados em `monitoraVoos()`
-    if request.method == "GET":
-        todos_voos = Voo.objects.all().values()
-        print(todos_voos)
-        form = Codigo_Voo_Monitora()
-        todos_voos=associaStatus(todos_voos)
+def monitoraCadastro(request):
+    context = getVoosDict(None)
+    return render(request,"monitoraCadastro.html",context)
+
+def getVoosDict(form):
+    todos_voos = Voo.objects.all().values()
+    todos_voos=associaStatus(todos_voos)
+    if form is not None:
         context = {
             'form' : form,
             'voos':todos_voos
         }
-        print(context)
+    else:
+        context = {
+            'voos':todos_voos
+        }
+    return context
+
+
+def escolheVooMonitorado(request):
+    # Receptor dos dados usados em `monitoraVoos()`
+    if request.method == "GET":
+        form = Codigo_Voo_Monitora()
+        context = getVoosDict(form)
         return render(request, "escolheVoo.html",context)
 
         

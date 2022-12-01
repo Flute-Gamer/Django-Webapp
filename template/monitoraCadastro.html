@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cadastro de Voos</title>
+    <title>Monitoramento de Voos</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -20,7 +20,23 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
-
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
     <script type="text/javascript">
         function redirectRelatorio(){
             window.location.assign("relatorios");
@@ -89,9 +105,9 @@
 
             <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities" onclick="redirectMonitora()">
+                    aria-expanded="true" aria-controls="collapseUtilities" onclick="redirectCadastra()">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Monitora Voos</span>
+                    <span>Cadastra Voos</span>
                 </a>
             </li> -->
 
@@ -190,31 +206,37 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Cadastro de Voos </h1>
-                        <div style="justify-content: end;">
+                        <h1 class="h3 mb-0 text-gray-800">Listagem em Cadastro</h1>
                         <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  href="../../atualizaVoos"><i
                             class="fas fa-download fa-sm text-white-50"></i>Atualizar</a>
-                        <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  href="../../monitoraCadastro"><i
-                            class="fas fa-download fa-sm text-white-50"></i>Listar</a>
                         </div>
-                    </div>
-                        <form action = "cadastroVoos" method = "post">
-                            {% csrf_token %}
-    
-                            {{ form.as_p }}
-                            <div class="errorMessage">
-                            {% if messages %}
-                        
-                                    {% for message in messages %}
-                                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                                    {% endfor %}
-                                
-                            {% endif %}
-                            </div>
-
+                        <form method = "post">
+                            <br><br>
+                            <table>
+                                <tr>
+                                    <th>Código de Voo</th>
+                                    <th>Origem</th>
+                                    <th>Destino</th>
+                                    <th>Status</th>
+                                    <th>Partida Prevista</th>
+                                </tr>
+                                {% if voos %}
+                                {% for voo in voos %}
+                                <tr>
+                                    <td> {{ voo.codigo_de_voo }} </td>
+                                    <td> {{ voo.aeroporto_partida }}</td>
+                                    <td> {{ voo.aeroporto_destino }}</td>
+                                    <td> {{ voo.status }} </td>
+                                    <td> {{ voo.partida_prevista }}</td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <li>Não há Voos cadastrados!</li>
+                                {% endif %}
+                            </table>
                             <br>
-                         
-                            <input type="submit" value="Enviar">
+                            <br>
+               
                         </form>
 
                     <!-- Content Row -->
