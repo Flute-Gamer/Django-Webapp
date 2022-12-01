@@ -570,7 +570,7 @@ def atualizaVoos(request):
                             'form' : form
                     }   
                     return render(request, "atualizaVoos.html", context)
-                voo.partida_real = partida_r
+                voo.chegada_real = chegada_r
                 voo.save()
 
             
