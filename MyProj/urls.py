@@ -31,6 +31,7 @@ urlpatterns = [
     path('atualizaVoos', views.atualizaVoos),
     path('logout',views.logout),
     path('monitoraCadastro',views.monitoraCadastro),
-    path('atualizaBasico',views.atualizaBasico)
+    path('atualizaBasico',views.atualizaBasico),
+    path('deletaCadastro',views.deletaCadastro)
     #path('erros',views.errors) #Faz muito sentido colocar páginas de erro com o erro passado como argumento
 ]

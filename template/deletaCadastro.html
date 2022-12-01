@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Cadastro de Voos</title>
+    <title>Monitoramento de Voos</title>
 
     <!-- Custom fonts for this template-->
     <link
@@ -22,17 +22,21 @@
     <link href="{% static 'css/sb-admin-2.css' %}" rel="stylesheet">
 
     <script type="text/javascript">
+        function redirectAtualizar(){
+            window.location.assign("/atualizaVoos");
+        }
+
         function redirectRelatorio(){
-            window.location.assign("relatorios");
+            window.location.assign("/relatorios");
         }
         function redirectMonitora(){
-            window.location.assign("monitoraVoos");
+            window.location.assign("/monitoraVoos");
         }
         function redirectCadastra(){
-            window.location.assign("cadastroVoos");
+            window.location.assign("/cadastroVoos");
         }
         function redirectInicial(){
-            window.location.assign("inicial");
+            window.location.assign("/inicial");
         }
     </script>
 
@@ -89,9 +93,9 @@
 
             <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities" onclick="redirectMonitora()">
+                    aria-expanded="true" aria-controls="collapseUtilities" onclick="redirectCadastra()">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Monitora Voos</span>
+                    <span>Cadastra Voos</span>
                 </a>
             </li> -->
 
@@ -190,34 +194,31 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Cadastro de Voos </h1>
-                        <div style="justify-content: end;">
+                        <h1 class="h3 mb-0 text-gray-800">Monitoramento de Voos </h1>
                         <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  href="../../atualizaVoos"><i
-                            class="fas fa-download fa-sm text-white-50"></i>Atualizar</a>
-                        <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  href="../../monitoraCadastro"><i
-                            class="fas fa-download fa-sm text-white-50"></i>Listar</a>
-                        <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  href="../../deletaCadastro"><i
-                            class="fas fa-download fa-sm text-white-50"></i>Deletar</a>
-                        </div>
+                                class="fas fa-download fa-sm text-white-50"></i>Atualizar</a>
+                                <!-- <button></button> -->
                     </div>
-                        <form action = "cadastroVoos" method = "post">
+                        Digite o código de voo abaixo para deletar seu cadastro: <br>
+                        <br>
+
+                        <form method = "POST">
                             {% csrf_token %}
     
                             {{ form.as_p }}
-                            <div class="errorMessage">
-                            {% if messages %}
-                        
-                                    {% for message in messages %}
-                                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                                    {% endfor %}
-                                
-                            {% endif %}
-                            </div>
-
+    
+                            <input type="submit" value="Deletar">
+    
+    
                             <br>
-                         
-                            <input type="submit" value="Enviar">
+    
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                            <br>
+    
                         </form>
+                    
 
                     <!-- Content Row -->
                     <div class="row">
@@ -265,7 +266,6 @@
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

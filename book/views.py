@@ -336,6 +336,32 @@ def retornaRelatorioPDF(request):
         arquivo = relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
         return FileResponse(open(arquivo,'rb'))
 
+def deletaCadastro(request):
+    form = Codigo_Voo_Monitora(request.POST)
+    print(type(form))
+    if form.is_valid():
+        print (form.cleaned_data)
+        codigo = form.cleaned_data['codigo_voo']
+        verifica_codigo = Voo.objects.filter(codigo_de_voo=codigo).exists()
+        print(verifica_codigo)
+        if verifica_codigo:                 ##IF que deleta se código está na basa de dados
+            deleta_voo(codigo)
+            messages.success(request, 'Voo deletado com sucesso.')
+            context = {
+                'form' : form
+                }
+            return render(request, "deletaCadastro.html", context)
+        
+        else:
+            print("passou")
+            messages.success(request, 'Voo não encontrado na nossa base de dados.')
+            context = {
+                    'form' : form
+                }
+            return render(request, "deletaCadastro.html", context)
+    else:
+        return render(request,"deletaCadastro.html")
+
 def atualizaBasico(request):
     if request.method == "GET":
         form = Formulario_Atualiza_Basico_Voos()
