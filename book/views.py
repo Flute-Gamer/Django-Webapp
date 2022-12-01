@@ -119,7 +119,7 @@ def cadastroVoos(request):
                     'form' : form
                  }
                 return render(request, "cadastroVoos.html", context)
-            
+            companhia = form.cleaned_data['companhia_aerea']
             destino = form.cleaned_data['destino_do_voo']
             origem = form.cleaned_data['origem_do_voo'] 
             partida_prev = form.cleaned_data['partida_prevista'] 
@@ -133,6 +133,7 @@ def cadastroVoos(request):
             print('DESTINO: ' + str(destino))
             Voo.objects.create(
             codigo_de_voo=codigo,
+            companhia_aerea = companhia,
             aeroporto_destino=destino,
             aeroporto_partida=origem,
             partida_prevista=partida_prev,
@@ -228,6 +229,7 @@ def monitoraVoos(request):
         print(codigo_voo)
         context = {
             'voo_mostrado': mostra_codigo_do_voo(codigo_voo),
+            'campanhia_mostrada' : mostra_companhia(codigo_voo),
             'status_mostrado': mostra_status_do_voo(codigo_voo),
             'destino_mostrado': mostra_aeroporto_destino(codigo_voo),
             'partida_mostrada': mostra_aeroporto_partida(codigo_voo),
@@ -283,6 +285,11 @@ def mostra_codigo_do_voo(codigo_voo):
     voo = Voo.objects.get(codigo_de_voo=codigo_voo)
     print('Código do voo: '+ str(voo.codigo_de_voo))
     return ('Código do voo: '+ str(voo.codigo_de_voo))
+
+def mostra_companhia(codigo_voo):
+    voo = Voo.objects.get(codigo_de_voo=codigo_voo)
+    print('Companhia Aérea: '+ str(voo.companhia_aerea))
+    return ('Companhia Aérea: '+ str(voo.companhia_aerea))
 
 def mostra_status_do_voo(codigo_voo):
     voo = Voo.objects.get(codigo_de_voo=codigo_voo)

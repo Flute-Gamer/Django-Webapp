@@ -7,6 +7,7 @@ class Voo(models.Model):
     status = models.IntegerField()
     aeroporto_destino = models.CharField(max_length=200, null=False)
     aeroporto_partida = models.CharField(max_length=200, null=False)
+    companhia_aerea = models.CharField(max_length=200, null=False)
     partida_prevista = models.DateTimeField()
     partida_real = models.DateTimeField(null = True)
     chegada_prevista = models.DateTimeField()

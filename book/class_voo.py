@@ -1,6 +1,6 @@
 class Voo():
     ##Construir Classe
-    def __init__(self, status, aeroporto_destino, aeroporto_partida, partida_prevista, chegada_prevista):
+    def __init__(self, status, aeroporto_destino, aeroporto_partida, partida_prevista, chegada_prevista, companhia_aerea):
         self.codigo_de_voo     = 0
         self.status            = status
         self.aeroporto_destino = aeroporto_destino
@@ -9,6 +9,7 @@ class Voo():
         self.partida_real      = 0
         self.chegada_prevista  = chegada_prevista
         self.chegada_real      = 0
+        self.companhia_aerea   = companhia_aerea
 
     ##GETTERS
 
@@ -36,6 +37,9 @@ class Voo():
     def get_chegada_real(self):
         return self.chegada_real    
 
+    def get_companhia_aerea(self):
+        return self.companhia_aerea  
+
     ##SETTERS
 
     def set_codigo_de_voo(self, codigo_de_voo):
@@ -61,3 +65,6 @@ class Voo():
 
     def set_chegada_real(self, chegada_real):
         self.chegada_real = chegada_real 
+
+    def set_companhia_aerea(self, companhia_aerea):
+        self.companhia_aerea = companhia_aerea
