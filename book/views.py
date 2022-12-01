@@ -243,12 +243,20 @@ def monitoraVoos(request):
             verifica_codigo = Voo.objects.filter(codigo_de_voo=codigo).exists()
             print(verifica_codigo)
             if verifica_codigo:                 ##IF que deleta se código está na basa de dados
-                deleta_voo(codigo)
-                messages.success(request, 'Voo deletado com sucesso.')
-                context = {
-                    'form' : form
-                 }
-                return render(request, "monitoraVoos.html", context)
+                voo = Voo.objects.get(codigo_de_voo=codigo)
+                if int(voo.status) == 6:
+                    deleta_voo(codigo)
+                    messages.success(request, 'Voo deletado com sucesso.')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "monitoraVoos.html", context)
+                else:
+                    messages.success(request, 'Não é possível deletar um voo em andamento.')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "monitoraVoos.html", context)
             
             else:
                 print("passou")
