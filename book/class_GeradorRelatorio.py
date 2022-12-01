@@ -89,7 +89,7 @@ class GeradorRelatorio:
                 pdf.ln(-altura)
                 pdf.set_x(campoAeroporto+campoID+10)
 
-                pdf.cell(campoComp, altura, str("AAAAAAAAAA"), 1, 1, 'C') #TODO trocar texto por voo.companhia_aerea
+                pdf.cell(campoComp, altura, str(voo.companhia_aerea), 1, 1, 'C')
                 pdf.ln(-altura)
                 pdf.set_x(campoAeroporto+campoID+campoComp+10)
 
@@ -106,7 +106,7 @@ class GeradorRelatorio:
                 pdf.ln(-altura)
                 pdf.set_x(campoAeroporto+campoID+10)
 
-                pdf.cell(campoComp, altura, str("AAAAAAAAAA"), 1, 1, 'C') #TODO trocar texto por voo.companhia_aerea
+                pdf.cell(campoComp, altura, str(voo.companhia_aerea), 1, 1, 'C')
                 pdf.ln(-altura)
                 pdf.set_x(campoAeroporto+campoID+campoComp+10)
 
