@@ -453,13 +453,13 @@ def atualizaVoos(request):
             chegada_prev = form.cleaned_data['chegada_prevista'] 
             partida_r = form.cleaned_data['partida_real'] 
             chegada_r = form.cleaned_data['chegada_real']
-            status = form.cleaned_data['status']
+            status = int(form.cleaned_data['status'])
             if  status is not None:
                 if voo.status < status:
                     voo.status = status
                     voo.save()
                 if voo.status == status:
-                    messages.success(request, 'Voo já está com este status') 
+                    messages.success(request, 'Voo está com este status') 
                     context = {
                         'form' : form
                     }
