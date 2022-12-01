@@ -346,9 +346,12 @@ def retornaRelatorioPDF(request):
         #                 tipo é um boolean (0 para Partidas e 1 para Chegadas)
         #                 inicio e fim sao datetimes na forma AAAA/MM/DD-HH:MM:SS 
         #                 (Utilizar a seguinte parte da documentação: https://docs.djangoproject.com/en/4.1/ref/forms/fields/#datetimefield )
-        
-        arquivo = relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
-        return FileResponse(open(arquivo,'rb'))
+        if relatorio.valida():
+            arquivo = relatorio.gera_pdf() #funcao que gera pdf a paritr do objeto instanciado acima da classe
+            return FileResponse(open(arquivo,'rb'))
+        else:
+            messages.success(request, 'Não há voos com os parâmetros solicitados')
+            return render(request, "relatorios.html")
 
 def deletaCadastro(request):
     if request.method == "GET":
