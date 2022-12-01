@@ -494,6 +494,7 @@ def atualizaVoos(request):
             partida_r = form.cleaned_data['partida_real'] 
             chegada_r = form.cleaned_data['chegada_real']
             status = int(form.cleaned_data['status'])
+            
             if status != 1:
                 print("Status a cadastrar: " + str(status))
                 if voo.status < status and status - voo.status == 1:
@@ -560,43 +561,93 @@ def atualizaVoos(request):
             
 ### Partida e Chegada Real
 
-            if (partida_r and chegada_r is not None):
-                if (partida_r> chegada_r):  ## If não permite que voo possua chegada anterior a destino
-                    messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+            if (partida_r is not None):
+                if (voo.status == 6):
+                    if (partida_r > voo.partida_prevista): 
+                        messages.success(request, 'Atualizado com sucesso')
+                        voo.partida_real = partida_r
+                        voo.save()
+                        context = {
+                            'form' : form
+                        }
+                        return render(request, "atualizaVoos.html", context)
+                    else:  # Não permite que voo decole antes do previsto
+                        messages.success(request, 'Não é permitido decolar antes do previsto')
+                        context = {
+                            'form' : form
+                        }
+                        return render(request, "atualizaVoos.html", context)
+                else: # Voo no status errado
+                    messages.success(request, 'Não é possível cadastrar partida real para um voo não decolado')
+                    context = {
+                        'form' : form
+                    }
+                    return render(request, "atualizaVoos.html", context)  
+
+            if (chegada_r is not None):
+                if (voo.status == 7):
+                    if (chegada_r > voo.chegada_prevista): 
+                        messages.success(request, 'Atualizado com sucesso')
+                        voo.chegada_real = chegada_r
+                        voo.save()
+                        context = {
+                            'form' : form
+                        }
+                        return render(request, "atualizaVoos.html", context)
+                    else:  # Não permite que voo aterrisse antes do previsto
+                        messages.success(request, 'Não é permitido aterrissar antes do previsto')
+                        context = {
+                            'form' : form
+                        }
+                        return render(request, "atualizaVoos.html", context)
+                else: # Voo no status errado
+                    messages.success(request, 'Não é possível cadastrar chegada real para um voo não aterrissado')
                     context = {
                         'form' : form
                     }
                     return render(request, "atualizaVoos.html", context)
-                voo.partida_real = partida_r
-                voo.chegada_real = chegada_r
-                voo.save()
-            if (partida_r is not None and chegada_r is None):
-                if (voo.chegada_real is not None):
-                    if (partida_r > voo.chegada_real):
-                        messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
-                        context = {
-                        'form' : form
-                        }
-                        return render(request, "atualizaVoos.html", context)
-            voo.partida_real = partida_r
-            voo.save()
 
-            if (chegada_r is not None and partida_r is None):
-                if (voo.partida_real is not None):
-                    if (voo.partida_real > chegada_r):
-                        messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
-                        context = {
-                            'form' : form
-                        }   
-                        return render(request, "atualizaVoos.html", context)
-                voo.chegada_real = chegada_r
-                voo.save()
+
+            # if (voo.status == 7 and voo.partida_real is not None):
+            #     if (chegada_r < voo.chegada_prevista):
+            #         messages.success(request, 'Não é possível cadastrar uma chegada real que não chegou ou não partiu')
+            #         context = {
+            #         'form' : form
+            #         }
+            #         return render(request, "atualizaVoos.html", context)
+            #     else:
+            #         voo.chegada_real = chegada_r
+            #         voo.save()
+            #         return render(request, "atualizaVoos.html", context)
+
+            
+            # if (partida_r is not None and chegada_r is None):
+            #     if (voo.chegada_real is not None):
+            #         if (partida_r > voo.chegada_real):
+            #             messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+            #             context = {
+            #             'form' : form
+            #             }
+            #             return render(request, "atualizaVoos.html", context)
+            #     voo.partida_real = partida_r
+            #     voo.save()
+
+            # if (chegada_r is not None and partida_r is None):
+            #     if (voo.partida_real is not None):
+            #         if (voo.partida_real > chegada_r):
+            #             messages.success(request, 'Não é possível cadastrar um voo com chegada anterior a partida')
+            #             context = {
+            #                 'form' : form
+            #             }   
+            #             return render(request, "atualizaVoos.html", context)
+            #     voo.chegada_real = chegada_r
+            #     voo.save()
 
             
 
                 #Refresh
                 #Error msg
-            messages.success(request, 'Atualizações alteradas com sucesso.')
+           # messages.success(request, 'Atualizações alteradas com sucesso.')
             context = {
                 'form' : form
             }
