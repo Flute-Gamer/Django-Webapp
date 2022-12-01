@@ -175,6 +175,7 @@ def escolheVooMonitorado(request):
     # Receptor dos dados usados em `monitoraVoos()`
     if request.method == "GET":
         todos_voos = Voo.objects.all().values()
+        todos_voos = Voo.objects.filter(status__range=[1,8]).values()
         print(todos_voos)
         form = Codigo_Voo_Monitora()
         todos_voos=associaStatus(todos_voos)
