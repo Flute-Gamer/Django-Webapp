@@ -35,7 +35,8 @@ class GeradorRelatorio:
         campoID = 20
         altura = 8
         campoData = 35
-        campoAeroporto = 210-campoID-2*campoData-20
+        campoComp = 40
+        campoAeroporto = 210-campoID-2*campoData-20-campoComp
 
         nome = str('Relatorio'+'.pdf')
         
@@ -62,16 +63,19 @@ class GeradorRelatorio:
         pdf.cell(campoAeroporto, 2*altura, 'Aeroporto de Partida', 1, 1, 'C')
         pdf.ln(-2*altura)
         pdf.set_x(campoID+campoAeroporto+10)
-        
+        pdf.cell(campoComp, 2*altura, 'Companhia Aérea', 1, 1, 'C')
+        pdf.ln(-2*altura)
+        pdf.set_x(campoID+campoAeroporto+campoComp+10)
+
         if(self.tipo == self.texto):
             pdf.cell(2*campoData, altura, 'Partida', 1, 1, 'C')
         else:
             pdf.cell(2*campoData, altura, 'Chegada', 1, 1, 'C')
 
-        pdf.set_x(campoAeroporto+campoID+10)
+        pdf.set_x(campoID+campoAeroporto+campoComp+10)
         pdf.cell(campoData, altura, 'Prevista', 1, 1, 'C')
         pdf.ln(-altura)
-        pdf.set_x(campoID +campoAeroporto +campoData +10)
+        pdf.set_x(campoID +campoAeroporto +campoComp +campoData +10)
         pdf.cell(campoData, altura, 'Real', 1, 1, 'C')
         
         for voo in self.registros: #Linhas da tabela
@@ -84,10 +88,14 @@ class GeradorRelatorio:
                 pdf.cell(campoAeroporto, altura, voo.aeroporto_partida, 1, 1, 'C')
                 pdf.ln(-altura)
                 pdf.set_x(campoAeroporto+campoID+10)
-                pdf.cell(campoData, altura, str((voo.partida_prevista).strftime('%Y/%m/%d-%H:%M')), 1, 1, 'C')
-                
+
+                pdf.cell(campoComp, altura, str(voo.companhia_aerea), 1, 1, 'C')
                 pdf.ln(-altura)
-                pdf.set_x(campoAeroporto+campoID+campoData+10)
+                pdf.set_x(campoAeroporto+campoID+campoComp+10)
+
+                pdf.cell(campoData, altura, str((voo.partida_prevista).strftime('%Y/%m/%d-%H:%M')), 1, 1, 'C')
+                pdf.ln(-altura)
+                pdf.set_x(campoAeroporto+campoID+campoComp+campoData+10)
                 if(voo.partida_real != None):                    
                     pdf.cell(campoData, altura, str((voo.partida_real).strftime('%Y/%m/%d-%H:%M')), 1, 1, 'C')
                 else:
@@ -97,10 +105,14 @@ class GeradorRelatorio:
                 pdf.cell(campoAeroporto, altura, voo.aeroporto_destino, 1, 1, 'C')
                 pdf.ln(-altura)
                 pdf.set_x(campoAeroporto+campoID+10)
-                pdf.cell(campoData, altura, str((voo.chegada_prevista).strftime('%Y/%m/%d-%H:%M')), 1, 1, 'C')
-                
+
+                pdf.cell(campoComp, altura, str(voo.companhia_aerea), 1, 1, 'C')
                 pdf.ln(-altura)
-                pdf.set_x(campoAeroporto+campoID+campoData+10)
+                pdf.set_x(campoAeroporto+campoID+campoComp+10)
+
+                pdf.cell(campoData, altura, str((voo.chegada_prevista).strftime('%Y/%m/%d-%H:%M')), 1, 1, 'C')
+                pdf.ln(-altura)
+                pdf.set_x(campoAeroporto+campoID+campoData+campoComp+10)
                 if(voo.chegada_real != None):
                     pdf.cell(campoData, altura, str((voo.chegada_real).strftime('%Y/%m/%d-%H:%M')), 1, 1, 'C')
                 else:
