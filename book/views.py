@@ -171,12 +171,13 @@ def relatorios(request):
         # return render(request, "relatorios.html",context)
         return redirect(f"download/relatorio?{params}")
 
+
 def monitoraCadastro(request):
     context = getVoosDict(None)
     return render(request,"monitoraCadastro.html",context)
 
 def getVoosDict(form):
-    todos_voos = Voo.objects.all().values()
+    todos_voos = Voo.objects.filter(status__range=[1,8]).values()
     todos_voos=associaStatus(todos_voos)
     if form is not None:
         context = {
