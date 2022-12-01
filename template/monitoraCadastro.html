@@ -219,6 +219,7 @@
                                     <th>Destino</th>
                                     <th>Status</th>
                                     <th>Partida Prevista</th>
+                                    <th>Chegada Prevista</th>
                                 </tr>
                                 {% if voos %}
                                 {% for voo in voos %}
@@ -228,6 +229,7 @@
                                     <td> {{ voo.aeroporto_destino }}</td>
                                     <td> {{ voo.status }} </td>
                                     <td> {{ voo.partida_prevista }}</td>
+                                    <td> {{ voo.chegada_prevista }}</td>
                                 </tr>
                                 {% endfor %}
                                 {% else %}
