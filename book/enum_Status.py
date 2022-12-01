@@ -12,3 +12,4 @@ class enum_Status (Enum):
     Em_Voo =6 
     Aterrissado =7
     Cancelado = 8
+    Arquivado = 9
