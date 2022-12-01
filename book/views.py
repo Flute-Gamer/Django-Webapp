@@ -491,7 +491,6 @@ def atualizaVoos(request):
                 if voo.status < status and status - voo.status == 1:
                     voo.status = status
                     voo.save()
-                    return render(request, "atualizaVoos.html")
                 else:
                     messages.success(request, 'Não é possível pular um status!') 
                     context = {
