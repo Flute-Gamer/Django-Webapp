@@ -82,4 +82,6 @@ E rodar o comando:
  Para rodar remotamente, há também um link para o deploy feito em PythonAnywhere:
  https://luizmota.pythonanywhere.com/login/auth
 
+Para fazer Logout, clique na foto amigável no canto direito superior
+
  Boa sorte encontrando os logins e senhas no código-fonte ;)

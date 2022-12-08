@@ -16,27 +16,27 @@ from django.contrib.auth import login as login_django
 
 def login(request):
     if request.method == 'GET':
-        usuario_check = User.objects.filter(username="Cara_Crud").exists()
+        usuario_check = User.objects.filter(username="operador").exists()
         if usuario_check == False:
-                user_criar = "Cara_Crud"
+                user_criar = "operador"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
-        usuario_check = User.objects.filter(username="Cara_Relatorio").exists()
+        usuario_check = User.objects.filter(username="gerente").exists()
         if usuario_check == False:
-                user_criar = "Cara_Relatorio"
+                user_criar = "gerente"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
-        usuario_check = User.objects.filter(username="Torre").exists()
+        usuario_check = User.objects.filter(username="torre").exists()
         if usuario_check == False:
-                user_criar = "Torre"
+                user_criar = "torre"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
-        usuario_check = User.objects.filter(username="Funcionário").exists()
+        usuario_check = User.objects.filter(username="funcionario").exists()
         if usuario_check == False:
-                user_criar = "Funcionário"
+                user_criar = "funcionario"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
@@ -52,9 +52,9 @@ def login(request):
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
-        usuario_check = User.objects.filter(username="Piloto").exists()
+        usuario_check = User.objects.filter(username="piloto").exists()
         if usuario_check == False:
-                user_criar = "Piloto"
+                user_criar = "piloto"
                 senha_criar= "1234"
                 user_criar = User.objects.create_user(username=user_criar, password=senha_criar)
                 user_criar.save()
