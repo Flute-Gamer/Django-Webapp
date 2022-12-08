@@ -227,6 +227,10 @@
                                     <th>Origem</th>
                                     <th>Destino</th>
                                     <th>Status</th>
+                                    <th>Horário de Partida Previsto</th>
+                                    <th>Horário de Partida Real</th>
+                                    <th>Horário de Chegada Previsto</th>
+                                    <th>Horário de Chegada Real</th>
                                 </tr>
                                 {% if voos %}
                                 {% for voo in voos %}
@@ -236,6 +240,10 @@
                                     <td> {{ voo.aeroporto_partida }}</td>
                                     <td> {{ voo.aeroporto_destino }}</td>
                                     <td> {{ voo.status }} </td>
+                                    <td> {{ voo.partida_prevista }} </td>
+                                    <td> {{ voo.partida_real }} </td>
+                                    <td> {{ voo.chegada_prevista }} </td>
+                                    <td> {{ voo.chegada_real }} </td>
                                 </tr>
                                 {% endfor %}
                                 {% else %}
