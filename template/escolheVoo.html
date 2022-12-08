@@ -207,17 +207,23 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Monitoramento de Voos </h1>
+                        {% if usuario == 'torre' or usuario == 'gerente' or usuario == 'Gerente_Testes' %}
                         <a class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"  href="../../atualizaVoos"><i
                             class="fas fa-download fa-sm text-white-50"></i>Atualizar</a>
+                            {% endif %}
                         </div>
+                        {% if usuario == 'torre' or usuario == 'gerente' or usuario == 'Gerente_Testes' %}
                         <p>Escolha o voo que você quer monitorar com mais detalhes:</p>
+                        {% endif %}
                         <form method = "post">
+                            {% if usuario == 'torre' or usuario == 'gerente' or usuario == 'Gerente_Testes' %}
                             {% csrf_token %}
     
                             {{ form }}
                             
                          
                             <input type="submit" value="Enviar">
+                        {% endif %}
                             
                             <br><br>
                             <table>
